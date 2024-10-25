@@ -3,9 +3,19 @@
 BeginPackage["CoolQuant`"]
 
 
+(* Constants/Variables *)
 VARASSUME = {m\[Element]Reals, m>0, \[Omega]\[Element]Reals, \[Omega]>0, \[HBar]\[Element]Reals, \[HBar]>0, x\[Element]Reals, p\[Element]Reals};
 $Assumptions = If[$Assumptions===True, VARASSUME, Join[$Assumptions, VARASSUME]];
 SetAttributes[{m, \[Omega], \[HBar]}, Constant]
+(* QParamQ/QNumericQ? *)
+
+(* Number Questions *)
+(* \[HBar] etc. cannot be genuinely numeric with Mathematica's implementations
+while preserving assumptions, so check for constancy instead. *)
+(* Check evals the first expression and returns, unless messages are generated
+in which case it returns the second. Quiet suppresses the messages. *)
+ConstantQ[n_] := Quiet @ Check[Attributes[n] ~ContainsAll~ {Constant}, False]
+QNumericQ[n_] := NumericQ[n] \[Or] ConstantQ[n]
 
 (* Parameter Conventions:
 	a, b etc. scalars
@@ -17,7 +27,7 @@ SetAttributes[{m, \[Omega], \[HBar]}, Constant]
 
 
 (* Safety Off *)
-(* we are apparently performing surgery on these operations. *)
+(* we are performing open-heart surgery on the following operations. *)
 (* IMPORTANT: lower definitions overwrite higher definitions given same Tag. *)
 (* reprotect at the end!! *)
 PATIENTS = {Plus, Times, CenterDot, NonCommutativeMultiply};
@@ -26,11 +36,13 @@ Unprotect @@ PATIENTS
 
 (* Quantum Objects (operators, bras, kets) *)
 (* _h is anything with the head h, a_. denotes optional pattern *)
+(* The -Q (question) functions find generalized objects of a type.
+	Base types are indicated with heads, e.g. _Ket for kets. *)
 OperatorQ[expr_] := MatchQ[Distribute @ expr, a_. \[Alpha]_ ~QDot~ Q_?OperatorQ + \[Beta]_.] \
 					\[Or] MatchQ[Distribute @ expr, a_. Q_?OperatorQ ~QDot~ \[Alpha]_ + \[Beta]_.] \
 					\[Or] MatchQ[Distribute @ expr, a_. _Operator + \[Beta]_.]
-KetQ[expr_] := MatchQ[expr, \[Alpha]_ ~QDot~ _Ket] \[Or] MatchQ[expr, a_. _Ket]
-BraQ[expr_] := MatchQ[expr, _Bra ~QDot~ \[Alpha]_] \[Or] MatchQ[expr, a_. _Bra]
+KetQ[expr_] := MatchQ[expr, a_. \[Alpha]_ ~QDot~ \[Beta]_?KetQ] \[Or] MatchQ[expr, a_. _Ket]
+BraQ[expr_] := MatchQ[expr, a_. \[Beta]_?BraQ ~QDot~ \[Alpha]_] \[Or] MatchQ[expr, a_. _Bra]
 QObjQ[expr_] := OperatorQ[expr] \[Or] KetQ[expr] \[Or] BraQ[expr]
 
 
@@ -42,8 +54,8 @@ Operator = OverHat;
 
 
 (* Bra-ket Notation *)
-Ket/: Ket[{f_}]\[ConjugateTranspose] := Bra[{f}]
-Bra/: Bra[{f_}]\[ConjugateTranspose] := Ket[{f}]
+Ket /: Ket[{f_}]\[ConjugateTranspose] := Bra[{f}]
+Bra /: Bra[{f_}]\[ConjugateTranspose] := Ket[{f}]
 
 
 (* Dot Operation *)
@@ -58,10 +70,10 @@ SetAttributes[CenterDot, {Flat, OneIdentity}]
 use of a commutative multiplication instead of \[CenterDot] & without parentheses are not my problem 
 \.af\_(\:30c4)_/\.af *)
 (* discriminating constants *)
-a_?NumericQ ~QDot~ \[Alpha]_ := a \[Alpha]
-\[Alpha]_ ~QDot~ a_?NumericQ := a \[Alpha]
-(a_?NumericQ \[Alpha]_) ~QDot~ \[Beta]_ := a \[Alpha] ~QDot~ \[Beta]
-\[Alpha]_ ~QDot~ (b_?NumericQ \[Beta]_) := b \[Alpha] ~QDot~ \[Beta]
+a_?QNumericQ ~QDot~ \[Alpha]_ := a \[Alpha]
+\[Alpha]_ ~QDot~ a_?QNumericQ := a \[Alpha]
+(a_?QNumericQ \[Alpha]_) ~QDot~ \[Beta]_ := a \[Alpha] ~QDot~ \[Beta]
+\[Alpha]_ ~QDot~ (b_?QNumericQ \[Beta]_) := b \[Alpha] ~QDot~ \[Beta]
 (* powers *)
 (\[Alpha]_^(n_:1)) ~QDot~ (\[Alpha]_^(m_:1)) := \[Alpha]^(n+m)
 
@@ -77,8 +89,8 @@ Bra[{g_}] ~QDot~ Ket[{f_}] ^:= BraKet[{g}, {f}]
 (*Ket/: Q_ Ket[{f_}] := Q ~QDot~ Ket[{f}]*)
 \!\(\*OverscriptBox[\(Q_\), \(^\)]\) ~QDot~ Ket[{f_}] ^:= Ket[{\!\(\*OverscriptBox[\(Q\), \(^\)]\) ~QDot~ f}]
 
-(* disobedient edge case *)
-\[Alpha]_ Ket[{f_}] ^:= \[Alpha] ~QDot~ Ket[{f}] /; !NumericQ[\[Alpha]]
+(* disobedient usage edge case *)
+\[Alpha]_ Ket[{f_}] ^:= \[Alpha] ~QDot~ Ket[{f}] /; !QNumericQ[\[Alpha]]
 
 
 (* Operator Application Product *)
@@ -89,7 +101,7 @@ QMult = NonCommutativeMultiply;
 (*SetAttributes[Application, {Flat, OneIdentity}]*)
 
 (* scalar case *)
-\[Alpha]_ ~QMult~ fx_ := \[Alpha] fx /; NumericQ[\[Alpha]] \[Or] !QObjQ[\[Alpha]]
+\[Alpha]_ ~QMult~ fx_ := \[Alpha] fx /; !QObjQ[\[Alpha]]
 (* evaluation order *)(*
 QMult[O_, Q_, fx_] := O ~QMult~ (Q ~QMult~ fx)*)
 
@@ -103,8 +115,7 @@ SuperscriptBox[\(Q\), \(n - 1\)], \(^\)]\) ~QMult~ fx)
 (\[Alpha]_ + \[Beta]_) ~QMult~ fx_ ^:= (\[Alpha] ~QMult~ fx) + (\[Beta] ~QMult~ fx)
 
 (* generalized operator structures *)
-(a_?NumericQ Q_) ~QMult~ fx_ ^:= a Q ~QMult~ fx
-(*(Overscript[Q_, ^] ~QDot~ \[Alpha]_) ~QMult~ fx_ ^:= Overscript[Q, ^] ~QMult~ (\[Alpha] fx)*)
+(a_?QNumericQ Q_) ~QMult~ fx_ ^:= a Q ~QMult~ fx
 (O_ ~QDot~ Q_) ~QMult~ fx_ ^:= O ~QMult~ (Q ~QMult~ fx)
 
 Bra[{x}] ~QDot~ Ket[{\!\(\*OverscriptBox[\(Q_\), \(^\)]\) ~QDot~ f_}] ^:= \!\(\*OverscriptBox[\(Q\), \(^\)]\) ~QMult~ BraKet[{x}, {f}]
@@ -129,13 +140,16 @@ Commutator[g_, h_] := (g ~QDot~ h - h ~QDot~ g)
 Commutator[g_, h_, fx_] := (Simplify[Commutator[g, h] ~QMult~ fx]) / fx
 
 
-(* Basis Projection *)(*
-BraKet[{x},{x}]=1;
-BraKet[{p},{p}]=1;
-BraKet[{x},{p}]=E^(I/\[HBar] x p)/\[Sqrt](2\[Pi] \[HBar]);
-BraKet[{x},{f_}]:=f[x]
-BraKet[{g_},{x}] := Simplify[BraKet[{x},{g}]\[Conjugate]]
-*)
+(* Basis Projection *)
+QEval::usage = 
+"QEval[\!\(\*TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\)] evaluates the BraKet \!\(\*TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\)."
+
+BraKet[{x}, {x}] = 1;
+BraKet[{p}, {p}] = 1;
+QEval[BraKet[{x}, {p}]] = E^(I/\[HBar] x p)/\[Sqrt](2\[Pi] \[HBar]);
+QEval[BraKet[{x}, {f_}]] := f[x]
+QEval[BraKet[{g_}, {x}]] := Simplify[QEval[BraKet[{x}, {g}]]\[Conjugate]]
+QEval[BraKet[{g_}, {f_}]] := g ~QInner~ f
 
 
 (* Inner Product *)
@@ -151,20 +165,12 @@ StyleBox[\"f\",\nFontSlant->\"Italic\"]\), \!\(\*
 StyleBox[\"e\",\nFontSlant->\"Italic\"]\)] \
 computes the inner product \
 \!\(\*TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\) in the basis e."
-QInner[g_, f_] := QInner[g,f,x]
-QInner[g_, f_, e_] := \!\(
+QInner[g_, f_, e_:x] := \!\(
 \*SubsuperscriptBox[\(\[Integral]\), \(-\[Infinity]\), \(\[Infinity]\)]\(\*
 TemplateBox[{"g", "e"},
 "BraKet"] \*
 TemplateBox[{"e", "f"},
 "BraKet"] \[DifferentialD]e\)\)
-
-(*BraKet[{g_}, {f_}] := \!\(
-\*SubsuperscriptBox[\(\[Integral]\), \(-\[Infinity]\), \(\[Infinity]\)]\(\*
-TemplateBox[{"g", "x"},
-"BraKet"]\*
-TemplateBox[{"x", "f"},
-"BraKet"]\[DifferentialD]x\)\)*)
 
 
 (* Expectation Value *)
