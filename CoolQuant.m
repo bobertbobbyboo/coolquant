@@ -14,8 +14,8 @@ SetAttributes[{m, \[Omega], \[HBar]}, Constant]
 while preserving assumptions, so check for constancy instead. *)
 (* Check evals the first expression and returns, unless messages are generated
 in which case it returns the second. Quiet suppresses the messages. *)
-ConstantQ[n_] := Quiet @ Check[Attributes[n] ~ContainsAll~ {Constant}, False]
-QNumericQ[n_] := NumericQ[n] \[Or] ConstantQ[n]
+ConstantQ[expr_] := Quiet @ Check[Attributes[expr] ~ContainsAll~ {Constant}, False]
+QNumericQ[expr_] := NumericQ[expr] \[Or] ConstantQ[expr] \[Or] BraKetQ[expr]
 
 (* Parameter Conventions:
 	a, b etc. scalars
@@ -43,6 +43,7 @@ OperatorQ[expr_] := MatchQ[Distribute @ expr, a_. \[Alpha]_ ~QDot~ Q_?OperatorQ 
 					\[Or] MatchQ[Distribute @ expr, a_. _Operator + \[Beta]_.]
 KetQ[expr_] := MatchQ[expr, a_. \[Alpha]_ ~QDot~ \[Beta]_?KetQ] \[Or] MatchQ[expr, a_. _Ket]
 BraQ[expr_] := MatchQ[expr, a_. \[Beta]_?BraQ ~QDot~ \[Alpha]_] \[Or] MatchQ[expr, a_. _Bra]
+BraKetQ[expr_] := MatchQ[expr, a_?QNumericQ _BraKet] \[Or] MatchQ[expr, _BraKet]
 QObjQ[expr_] := OperatorQ[expr] \[Or] KetQ[expr] \[Or] BraQ[expr]
 
 
@@ -60,7 +61,7 @@ Bra /: Bra[{f_}]\[ConjugateTranspose] := Ket[{f}]
 
 (* Dot Operation *)
 QDot::usage = 
-"Generally noncommutative multiplication between quantum objects."
+"Generally noncommutative multiplication between quantum objects.";
 QDot = CenterDot;
 SetAttributes[CenterDot, {Flat, OneIdentity}]
 (* funny notation: a ~QDot~ b \[Congruent] a \[CircleDot] b *)
@@ -86,7 +87,6 @@ SuperscriptBox[\(Q\), \(n + m\)], \(^\)]\)
 
 (* bras n kets *)
 Bra[{g_}] ~QDot~ Ket[{f_}] ^:= BraKet[{g}, {f}]
-(*Ket/: Q_ Ket[{f_}] := Q ~QDot~ Ket[{f}]*)
 \!\(\*OverscriptBox[\(Q_\), \(^\)]\) ~QDot~ Ket[{f_}] ^:= Ket[{\!\(\*OverscriptBox[\(Q\), \(^\)]\) ~QDot~ f}]
 
 (* disobedient usage edge case *)
@@ -96,7 +96,7 @@ Bra[{g_}] ~QDot~ Ket[{f_}] ^:= BraKet[{g}, {f}]
 (* Operator Application Product *)
 QMult::usage = 
 "Generally noncommutative multiplication for applying \
-operators to expressions."
+operators to expressions.";
 QMult = NonCommutativeMultiply;
 (*SetAttributes[Application, {Flat, OneIdentity}]*)
 
@@ -118,8 +118,8 @@ SuperscriptBox[\(Q\), \(n - 1\)], \(^\)]\) ~QMult~ fx)
 (a_?QNumericQ Q_) ~QMult~ fx_ ^:= a Q ~QMult~ fx
 (O_ ~QDot~ Q_) ~QMult~ fx_ ^:= O ~QMult~ (Q ~QMult~ fx)
 
-Bra[{x}] ~QDot~ Ket[{\!\(\*OverscriptBox[\(Q_\), \(^\)]\) ~QDot~ f_}] ^:= \!\(\*OverscriptBox[\(Q\), \(^\)]\) ~QMult~ BraKet[{x}, {f}]
-Bra[{x}] ~QDot~ Q_ ~QDot~ Ket[{f_}] ^:= Q ~QMult~ BraKet[{x}, {f}]
+(*Bra[{x}] ~QDot~ Ket[{Overscript[Q_, ^] ~QDot~ f_}] ^:= Overscript[Q, ^] ~QMult~ BraKet[{x}, {f}]*)
+QDot[Bra[{x}], Q_, Ket[{f_}]] ^:= Q ~QMult~ BraKet[{x}, {f}]
 
 
 (* Commutator *)
@@ -135,14 +135,17 @@ Commutator[\!\(\*
 StyleBox[\"g\",\nFontSlant->\"Italic\"]\), \!\(\*
 StyleBox[\"h\",\nFontSlant->\"Italic\"]\), \!\(\*
 StyleBox[\"fx\",\nFontSlant->\"Italic\"]\)] applies the test function \!\(\*
-StyleBox[\"fx\",\nFontSlant->\"Italic\"]\) and divides it out."
+StyleBox[\"fx\",\nFontSlant->\"Italic\"]\) and divides it out.";
 Commutator[g_, h_] := (g ~QDot~ h - h ~QDot~ g)
 Commutator[g_, h_, fx_] := (Simplify[Commutator[g, h] ~QMult~ fx]) / fx
 
 
 (* Basis Projection *)
 QEval::usage = 
-"QEval[\!\(\*TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\)] evaluates the BraKet \!\(\*TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\)."
+"QEval[\!\(\*TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\)] evaluates the BraKet \!\(\*TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\).";
+(* general *)
+QEval[\[Alpha]_] := \[Alpha]
+QEval[\[Alpha]_ \[Beta]_] := QEval[\[Alpha]]QEval[\[Beta]]
 
 BraKet[{x}, {x}] = 1;
 BraKet[{p}, {p}] = 1;
@@ -164,13 +167,14 @@ StyleBox[\"g\",\nFontSlant->\"Italic\"]\), \!\(\*
 StyleBox[\"f\",\nFontSlant->\"Italic\"]\), \!\(\*
 StyleBox[\"e\",\nFontSlant->\"Italic\"]\)] \
 computes the inner product \
-\!\(\*TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\) in the basis e."
+\!\(\*TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\) in the basis \!\(\*
+StyleBox[\"e\",\nFontSlant->\"Italic\"]\).";
 QInner[g_, f_, e_:x] := \!\(
-\*SubsuperscriptBox[\(\[Integral]\), \(-\[Infinity]\), \(\[Infinity]\)]\(\*
+\*SubsuperscriptBox[\(\[Integral]\), \(-\[Infinity]\), \(\[Infinity]\)]\(QEval[\*
 TemplateBox[{"g", "e"},
 "BraKet"] \*
 TemplateBox[{"e", "f"},
-"BraKet"] \[DifferentialD]e\)\)
+"BraKet"]] \[DifferentialD]e\)\)
 
 
 (* Expectation Value *)
