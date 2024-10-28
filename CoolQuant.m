@@ -30,20 +30,20 @@ QNumericQ[expr_] := NumericQ[expr] \[Or] ConstantQ[expr] \[Or] BraKetQ[expr]
 (* we are performing open-heart surgery on the following operations. *)
 (* IMPORTANT: lower definitions overwrite higher definitions given same Tag. *)
 (* reprotect at the end!! *)
-PATIENTS = {Plus, Times, CenterDot, NonCommutativeMultiply};
+PATIENTS = {Plus, Times, Power, CenterDot, NonCommutativeMultiply};
 Unprotect @@ PATIENTS
 
 
 (* Quantum Objects (operators, bras, kets) *)
 (* _h is anything with the head h, a_. denotes optional pattern *)
 (* The -Q (question) functions find generalized objects of a type.
-	Base types are indicated with heads, e.g. _Ket for kets. *)
-OperatorQ[expr_] := MatchQ[Distribute @ expr, a_. \[Alpha]_ ~QDot~ Q_?OperatorQ + \[Beta]_.] \
-					\[Or] MatchQ[Distribute @ expr, a_. Q_?OperatorQ ~QDot~ \[Alpha]_ + \[Beta]_.] \
-					\[Or] MatchQ[Distribute @ expr, a_. _Operator + \[Beta]_.]
-KetQ[expr_] := MatchQ[expr, a_. \[Alpha]_ ~QDot~ \[Beta]_?KetQ] \[Or] MatchQ[expr, a_. _Ket]
-BraQ[expr_] := MatchQ[expr, a_. \[Beta]_?BraQ ~QDot~ \[Alpha]_] \[Or] MatchQ[expr, a_. _Bra]
-BraKetQ[expr_] := MatchQ[expr, a_?QNumericQ _BraKet] \[Or] MatchQ[expr, _BraKet]
+	Base types are associated with heads, e.g. _Ket for kets. *)
+OperatorQ[expr_] := MatchQ[Distribute @ expr, a_. _Operator^b_. + \[Beta]_.] \
+					\[Or] MatchQ[Distribute @ expr, a_. \[Alpha]_ ~QDot~ Q_?OperatorQ + \[Beta]_.] \
+					\[Or] MatchQ[Distribute @ expr, a_. Q_?OperatorQ ~QDot~ \[Alpha]_ + \[Beta]_.]
+KetQ[expr_] := MatchQ[expr, a_. _Ket] \[Or] MatchQ[expr, a_. \[Alpha]_ ~QDot~ \[Beta]_?KetQ]
+BraQ[expr_] := MatchQ[expr, a_. _Bra] \[Or] MatchQ[expr, a_. \[Beta]_?BraQ ~QDot~ \[Alpha]_]
+BraKetQ[expr_] := MatchQ[expr, _BraKet] \[Or] MatchQ[expr, a_?QNumericQ _BraKet]
 QObjQ[expr_] := OperatorQ[expr] \[Or] KetQ[expr] \[Or] BraQ[expr]
 
 
@@ -52,6 +52,7 @@ Operator = OverHat;
 \!\(\*OverscriptBox[\(x\), \(^\)]\)[fx_] := x fx
 \!\(\*OverscriptBox[\(p\), \(^\)]\)[fx_] := -I \[HBar] \!\(
 \*SubscriptBox[\(\[PartialD]\), \(x\)]fx\)
+(*Overscript[H, ^][fx_] := Overscript[p, ^]*)
 
 
 (* Bra-ket Notation *)
@@ -79,11 +80,12 @@ a_?QNumericQ ~QDot~ \[Alpha]_ := a \[Alpha]
 (\[Alpha]_^(n_:1)) ~QDot~ (\[Alpha]_^(m_:1)) := \[Alpha]^(n+m)
 
 (* compound operator structures *)
-\!\(\*OverscriptBox[
-SuperscriptBox[\(Q_\), \(n_ : 1\)], \(^\)]\) ~QDot~ \!\(\*OverscriptBox[
-SuperscriptBox[\(Q_\), \(m_ : 1\)], \(^\)]\) ^:= \!\(\*OverscriptBox[
-SuperscriptBox[\(Q\), \(n + m\)], \(^\)]\)
+(*Overscript[(Q_^(n_:1)), ^] ~QDot~ Overscript[(Q_^(m_:1)), ^] ^:= Overscript[Q^(n+m), ^]*)
 (*Overscript[O_, ^] ~QDot~ Overscript[Q_, ^] ^:= Overscript[(O ~QDot~ Q), ^]*)
+(* translations *)
+\!\(\*OverscriptBox[
+SuperscriptBox[\(Q_\), \(n_\)], \(^\)]\) ^:= \!\(\*OverscriptBox[\(Q\), \(^\)]\)^n
+\!\(\*OverscriptBox[\((O_\ ~QDot~\ Q_)\), \(^\)]\) ^:= \!\(\*OverscriptBox[\(O\), \(^\)]\) \[CenterDot] \!\(\*OverscriptBox[\(Q\), \(^\)]\)
 
 (* bras n kets *)
 Bra[{g_}] ~QDot~ Ket[{f_}] ^:= BraKet[{g}, {f}]
@@ -107,11 +109,8 @@ QMult[O_, Q_, fx_] := O ~QMult~ (Q ~QMult~ fx)*)
 
 (* operator applications *)
 \!\(\*OverscriptBox[\(\(Q_\)\(\ \)\), \(^\)]\)~QMult~ fx_ ^:= \!\(\*OverscriptBox[\(Q\), \(^\)]\) @ fx
-\!\(\*OverscriptBox[
-SuperscriptBox[\(Q_\), \(0\)], \(^\)]\) ~QMult~ fx_ ^:= fx
-\!\(\*OverscriptBox[
-SuperscriptBox[\(Q_\), \(n_\)], \(^\)]\) ~QMult~ fx_ ^:= \!\(\*OverscriptBox[\(Q\), \(^\)]\) ~QMult~ (\!\(\*OverscriptBox[
-SuperscriptBox[\(Q\), \(n - 1\)], \(^\)]\) ~QMult~ fx)
+(*Overscript[(Q_^0), ^] ~QMult~ fx_ ^:= fx*)
+(\!\(\*OverscriptBox[\(Q_\), \(^\)]\)^n_) ~QMult~ fx_ ^:= \!\(\*OverscriptBox[\(Q\), \(^\)]\) ~QMult~ ((\!\(\*OverscriptBox[\(Q\), \(^\)]\)^(n-1)) ~QMult~ fx)
 (\[Alpha]_ + \[Beta]_) ~QMult~ fx_ ^:= (\[Alpha] ~QMult~ fx) + (\[Beta] ~QMult~ fx)
 
 (* generalized operator structures *)
