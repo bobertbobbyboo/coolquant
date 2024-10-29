@@ -4,7 +4,7 @@ BeginPackage["CoolQuant`"]
 
 
 (* Constants/Variables *)
-VARASSUME = {m\[Element]Reals, m>0, \[Omega]\[Element]Reals, \[Omega]>0, \[HBar]\[Element]Reals, \[HBar]>0, x\[Element]Reals, p\[Element]Reals};
+VARASSUME = {m\[Element]Reals, m>0, \[Omega]\[Element]Reals, \[Omega]>0, \[HBar]\[Element]Reals, \[HBar]>0, e_?(QBasis @@ {x,p})\[Element]Reals};
 $Assumptions = If[$Assumptions===True, VARASSUME, Join[$Assumptions, VARASSUME]];
 SetAttributes[{m, \[Omega], \[HBar]}, Constant]
 
@@ -25,7 +25,7 @@ QNumericQ[expr_] := NumericQ[expr] \[Or] ConstantQ[expr] \[Or] BraKetQ[expr]
 *)
 (* turn off the annoying shadow message *)
 (*Off[General::shdw]*)
-Off @@ {\[HBar]::shdw, x::shdw, p::shdw}
+Off @ \[HBar]::shdw
 
 
 (* Safety Off *)
@@ -107,8 +107,8 @@ Bra[{g_}] ~QDot~ Ket[{f_}] ^:= BraKet[{g}, {f}]
 
 (* Operator Application Product *)
 QMult::usage = 
-"Generally noncommutative multiplication for applying \
-operators to expressions.";
+"Generally noncommutative multiplication for applying operators \
+to expressions.";
 QMult = NonCommutativeMultiply;
 (*SetAttributes[Application, {Flat, OneIdentity}]*)
 
@@ -118,7 +118,7 @@ QMult = NonCommutativeMultiply;
 QMult[O_, Q_, fx_] := O ~QMult~ (Q ~QMult~ fx)*)
 
 (* operator applications *)
-\!\(\*OverscriptBox[\(\(Q_\)\(\ \)\), \(^\)]\)~QMult~ fx_ ^:= \!\(\*OverscriptBox[\(Q\), \(^\)]\) @ fx /; !BraKetQ[fx]
+\!\(\*OverscriptBox[\(\(Q_\)\(\ \)\), \(^\)]\)~QMult~ fx_ ^:= \!\(\*OverscriptBox[\(Q\), \(^\)]\) @ fx
 (*Overscript[(Q_^0), ^] ~QMult~ fx_ ^:= fx*)
 (\!\(\*OverscriptBox[\(Q_\), \(^\)]\)^n_) ~QMult~ fx_ ^:= \!\(\*OverscriptBox[\(Q\), \(^\)]\) ~QMult~ ((\!\(\*OverscriptBox[\(Q\), \(^\)]\)^(n-1)) ~QMult~ fx)
 
@@ -150,40 +150,52 @@ Commutator[g_, h_, fx_] := Simplify[Commutator[g, h] ~QMult~ fx] / fx
 
 
 (* Basis Projection *)
+
+(* compatible bases *)
+(* get a function that returns whether input is e-like *)
+QBasis[e_] := MatchQ[#, e] \[Or] MatchQ[#, Subscript[e, n_]] \[Or] MatchQ[#, Derivative[1][e]] \[Or] MatchQ[#, Derivative[1][Subscript[e, n_]]] &
+(* e1 or e2 *)
+QBasis[e1_, e2_] := QBasis[e1][#] \[Or] QBasis[e2][#] &
+
+(* Dirac delta functions *)
+BraKet[{\[Xi]1_?(QBasis @ x)}, {\[Xi]2_?(QBasis @ x)}] := DiracDelta[\[Xi]1 - \[Xi]2];
+BraKet[{\[Mu]1_?(QBasis @ p)}, {\[Mu]2_?(QBasis @ p)}] := DiracDelta[\[Mu]1 - \[Mu]2];
+
+BraKet[{\[Xi]_?(QBasis @ x)}, {\[Mu]_?(QBasis @ p)}] := E^(I/\[HBar] \[Xi] \[Mu])/\[Sqrt](2\[Pi] \[HBar]);
+BraKet[{g_}, {e_?(QBasis @@ {x, p})}] := Simplify[BraKet[{e}, {g}]\[Conjugate]]
+BraKet[{\[Xi]_?(QBasis @ x)}, {f_}] := f[\[Xi]]
+BraKet[{\[Mu]_?(QBasis @ p)}, {f_}] := \!\(\*OverscriptBox[\(f\), \(~\)]\)[\[Mu]]
+
+(* inner product evaluation *)
 QEval::usage = 
 "QEval[\!\(\*TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\)] evaluates the BraKet \!\(\*TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\).";
 (* general *)
 QEval[\[Alpha]_] := \[Alpha]
 QEval[\[Alpha]_ \[Beta]_] := QEval[\[Alpha]]QEval[\[Beta]]
-
-BraKet[{x}, {x}] = 1;
-BraKet[{p}, {p}] = 1;
-BraKet[{x}, {p}] = E^(I/\[HBar] x p)/\[Sqrt](2\[Pi] \[HBar]);
-QEval[BraKet[{x}, {f_}]] := f[x]
-QEval[BraKet[{g_}, {x}]] := Simplify[QEval[BraKet[{x}, {g}]]\[Conjugate]]
 QEval[BraKet[{g_}, {f_}]] := g ~QInner~ f
 
 
-(* Inner Product *)
-QInner::usage =
-"QInner[\!\(\*
+QInner::usage="QInner[\!\(\*
 StyleBox[\"g\",\nFontSlant->\"Italic\"]\), \!\(\*
 StyleBox[\"f\",\nFontSlant->\"Italic\"]\)] \
 computes the inner product \
-\!\(\*TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\) in the position basis.
+\!\(\*TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\) \
+in the position basis.
 QInner[\!\(\*
 StyleBox[\"g\",\nFontSlant->\"Italic\"]\), \!\(\*
 StyleBox[\"f\",\nFontSlant->\"Italic\"]\), \!\(\*
 StyleBox[\"e\",\nFontSlant->\"Italic\"]\)] \
 computes the inner product \
-\!\(\*TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\) in the basis \!\(\*
+\!\(\*TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\) \
+in the basis \!\(\*
 StyleBox[\"e\",\nFontSlant->\"Italic\"]\).";
 QInner[g_, f_, e_:x] := \!\(
-\*SubsuperscriptBox[\(\[Integral]\), \(-\[Infinity]\), \(\[Infinity]\)]\(QEval[\*
-TemplateBox[{"g", "e"},
+\*SubsuperscriptBox[\(\[Integral]\), \(-\[Infinity]\), \(\[Infinity]\)]\(\*
+TemplateBox[{"g", SuperscriptBox["e", "\[Prime]"]},
 "BraKet"] \*
-TemplateBox[{"e", "f"},
-"BraKet"]] \[DifferentialD]e\)\)
+TemplateBox[{SuperscriptBox["e", "\[Prime]"], "f"},
+"BraKet"] \[DifferentialD]
+\*SuperscriptBox[\(e\), \(\[Prime]\)]\)\)
 
 
 (* Expectation Value *)
