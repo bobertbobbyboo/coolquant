@@ -1,6 +1,6 @@
 (* ::Package:: *)
 
-BeginPackage["CoolQuant`"]
+BeginPackage["CoolQuant`"];
 
 
 (* Constants/Variables *)
@@ -8,7 +8,7 @@ VARASSUME = {m>0, \[Omega]>0, \[HBar]>0, c0>0, e_?(QBasis[x,p])\[Element]Reals};
 $Assumptions = If[$Assumptions===True, VARASSUME, Join[$Assumptions, VARASSUME]];
 SetAttributes[{m, \[Omega], \[HBar], c0}, Constant]
 (* protected. use rules to adjust values. *)
-Protect @@ {m, \[Omega], \[HBar], c0}
+Protect @@ {m, \[Omega], \[HBar], c0};
 
 (* Number Questions *)
 (* \[HBar] etc. cannot be genuinely numeric with Mathematica's implementations
@@ -16,8 +16,8 @@ while preserving assumptions, so check for constancy instead. *)
 (* Check evals the first expression and returns, unless messages are generated,
 in which case it returns the second. Quiet suppresses the messages. *)
 ConstantQ[expr_] := Quiet @ Check[Attributes[expr] ~ContainsAll~ {Constant}, False]
-(* guaranteed  *)
-QNumericQ[expr_] := NumericQ[expr] \[Or] ConstantQ[expr] (*\[Or] BraKetQ[expr]*)
+(* use QNumeric for symbols/values, QBased for expressions *)
+QNumericQ[expr_] := NumericQ[expr] \[Or] ConstantQ[expr]
 
 (* Parameter Conventions:
 	a, b etc. scalars
@@ -31,12 +31,20 @@ QNumericQ[expr_] := NumericQ[expr] \[Or] ConstantQ[expr] (*\[Or] BraKetQ[expr]*)
 (*Off @@ {x::shdw, p::shdw}*)
 
 
-(* Safety Off *)
-(* we are performing open-heart surgery on the following operations. *)
-(* IMPORTANT: lower definitions overwrite higher definitions given same Tag. *)
-(* reprotect at the end!! *)
-PATIENTS = {Plus, Times, Power, CenterDot, NonCommutativeMultiply};
-Unprotect @@ PATIENTS
+(* Compatible Bases *)
+(* get a function that returns whether input is e-like *)
+QBasis[e_][expr_] :=
+	MatchQ[expr, e] \[Or] MatchQ[expr, Subscript[e, n_]] \
+	\[Or] MatchQ[expr, Derivative[1][e]] \[Or] MatchQ[expr, Derivative[1][Subscript[e, n_]]]
+(* e1 or e2 or... *)
+(* use an outer product where the multiplication is applying a map *)
+QBasis[e__][expr_] := Or @@ Flatten @ Outer[#1 @ #2 &, QBasis /@ {e}, {expr}]
+(* very based. could be a derivative, idfk anymore *)
+(* QUnbased \[DoubleLeftRightArrow] QDot always commutes *)
+(* QNumeric \[Implies] QUnbased *)
+QBased[\[Alpha]_?BraKetQ]
+(* derivative wrt \[Xi] is zero *)
+Independent[]
 
 
 (* Quantum Objects (operators, bras, kets) *)
@@ -61,7 +69,16 @@ Operator = OverHat;
 (* derivative *)
 \!\(\*OverscriptBox[\(D\), \(^\)]\)[fx_] := \!\(
 \*SubscriptBox[\(\[PartialD]\), \(x\)]fx\)
-(*Overscript[H, ^][fx_] := Overscript[p, ^]*)
+
+
+(* Safety Off *)
+(* we are performing open-heart surgery on the following operations. *)
+(* IMPORTANT: lower definitions overwrite higher definitions given same Tag. 
+	define function properties (e.g. distributivity, associativity) before
+	specific object cases! *)
+(* reprotect at the end!! *)
+PATIENTS = {Plus, Times, Power, CenterDot, NonCommutativeMultiply};
+Unprotect @@ PATIENTS;
 
 
 (* Bra-ket Notation *)
@@ -81,20 +98,25 @@ Off @ QDot::shdw
 SetAttributes[CenterDot, {Flat, OneIdentity}]
 (* funny notation: a ~QDot~ b \[Congruent] a \[CircleDot] b *)
 
+(* a central element (element of the ring center C(R)) commutes with every other element *)
+(* !QObj \[And] (QNumeric \[Or] QUnbased) *)
+CentralQ[expr_]
+
 (* general arithmetic *)
-(* I agonized over the \[Alpha]\[CenterDot]b\[Beta] case for a full weekend ok. any issues arising from your
-use of a commutative multiplication instead of \[CenterDot] & without parentheses are not my problem 
-\.af\_(\:30c4)_/\.af *)
-(* commutativity for QNumerics *)
-a_?QNumericQ ~QDot~ \[Alpha]_ := a \[Alpha]
-\[Alpha]_ ~QDot~ a_?QNumericQ := a \[Alpha]
-(a_?QNumericQ \[Alpha]_) ~QDot~ \[Beta]_ := a \[Alpha] ~QDot~ \[Beta]
-\[Alpha]_ ~QDot~ (b_?QNumericQ \[Beta]_) := b \[Alpha] ~QDot~ \[Beta]
+(* I agonized over the \[Alpha]\[CenterDot]b\[Beta] case for a full weekend ok. any issues arising from use of
+	commutative multiplication instead of \[CenterDot] & without parentheses are not my problem 
+	\.af\_(\:30c4)_/\.af *)
 (* L/R distributivity over + *)
 \[Alpha]_ ~QDot~ (\[Beta]_ + \[Gamma]_) := \[Alpha] ~QDot~ \[Beta] + \[Alpha] ~QDot~ \[Gamma]
 (\[Alpha]_ + \[Beta]_) ~QDot~ \[Gamma]_ := \[Alpha] ~QDot~ \[Gamma] + \[Beta] ~QDot~ \[Gamma]
 (* powers *)
 (\[Alpha]_^(n_:1)) ~QDot~ (\[Alpha]_^(m_:1)) := \[Alpha]^(n+m)
+
+(* commutativity for QNumerics/Centrals *)
+a_?QNumericQ ~QDot~ \[Alpha]_ := a \[Alpha]
+\[Alpha]_ ~QDot~ a_?QNumericQ := a \[Alpha]
+(a_?QNumericQ \[Alpha]_) ~QDot~ \[Beta]_ := a \[Alpha] ~QDot~ \[Beta]
+\[Alpha]_ ~QDot~ (b_?QNumericQ \[Beta]_) := b \[Alpha] ~QDot~ \[Beta]
 
 (* compound operator structures *)
 (*Overscript[(Q_^(n_:1)), ^] ~QDot~ Overscript[(Q_^(m_:1)), ^] ^:= Overscript[Q^(n+m), ^]*)
@@ -120,22 +142,28 @@ to expressions.";
 QMult = NonCommutativeMultiply;
 (*SetAttributes[Application, {Flat, OneIdentity}]*)
 
-(* scalar case *)
-\[Alpha]_ ~QMult~ fx_ := \[Alpha] fx /; !QObjQ[\[Alpha]]
 (* evaluation order *)(*
 QMult[O_, Q_, fx_] := O ~QMult~ (Q ~QMult~ fx)*)
 
-(* operator applications *)
-\!\(\*OverscriptBox[\(\(Q_\)\(\ \)\), \(^\)]\)~QMult~ fx_ ^:= \!\(\*OverscriptBox[\(Q\), \(^\)]\) @ fx
-(*Overscript[(Q_^0), ^] ~QMult~ fx_ ^:= fx*)
-(\!\(\*OverscriptBox[\(Q_\), \(^\)]\)^n_) ~QMult~ fx_ ^:= \!\(\*OverscriptBox[\(Q\), \(^\)]\) ~QMult~ ((\!\(\*OverscriptBox[\(Q\), \(^\)]\)^(n-1)) ~QMult~ fx)
-(* on function projection *)
-QDot[Bra[{\[Xi]_?(QBasis[x])}], Q_, Ket[{f_}]] := Q ~QMult~ BraKet[{\[Xi]}, {f}]
-
 (* generalized operator structures *)
-(a_?QNumericQ Q_) ~QMult~ fx_ := a Q ~QMult~ fx
+(* R distributivity over + *)
 (O_ + Q_) ~QMult~ fx_ := (O ~QMult~ fx) + (Q ~QMult~ fx)
+(* \[Times] compatibility *)
+(a_ Q_) ~QMult~ fx_ := a Q ~QMult~ fx
+(* QDot compatibility *)
 (O_ ~QDot~ Q_) ~QMult~ fx_ := O ~QMult~ (Q ~QMult~ fx)
+
+(* nonoperator cases *)
+\[Alpha]_ ~QMult~ fx_ := \[Alpha] fx /; !QObjQ[\[Alpha]]
+\[Alpha]_?QObjQ ~QMult~ fx_ := \[Alpha] \[CenterDot] fx /; !OperatorQ[\[Alpha]]
+
+(* base operator applications *)
+(* delay application if fx is a bra-ket *)
+\!\(\*OverscriptBox[\(\(Q_\)\(\ \)\), \(^\)]\)~QMult~ fx_ ^:= \!\(\*OverscriptBox[\(Q\), \(^\)]\) @ fx /; !BraKetQ[fx]
+(\!\(\*OverscriptBox[\(Q_\), \(^\)]\)^n_) ~QMult~ fx_ ^:= \!\(\*OverscriptBox[\(Q\), \(^\)]\) ~QMult~ ((\!\(\*OverscriptBox[\(Q\), \(^\)]\)^(n-1)) ~QMult~ fx)
+(* on function projected into basis *)
+QDot[Bra[{e_?(QBasis[x, p])}], Q_, Ket[{f_}]] := Q ~QMult~ BraKet[{e}, {f}]
+BraKet[{e_?(QBasis[x, p])}, {Q_ \[CenterDot] f_}] := Q ~QMult~ BraKet[{e}, {f}]
 
 (* function composition *)
 (*(f_ ~QDot~ g_)[args__] := f ~QMult~ g @ args*)
@@ -156,33 +184,18 @@ StyleBox[\"h\",\nFontSlant->\"Italic\"]\), \!\(\*
 StyleBox[\"fx\",\nFontSlant->\"Italic\"]\)] applies the test function \!\(\*
 StyleBox[\"fx\",\nFontSlant->\"Italic\"]\) and divides it out.";
 Commutator[g_, h_] := (g ~QDot~ h - h ~QDot~ g)
-Commutator[g_, h_, fx_] := Simplify[Commutator[g, h] ~QMult~ fx] / fx
+Commutator[g_, h_, fx_] := Commutator[g, h] ~QMult~ fx / fx //Simplify
 
 
-(* Basis Projection *)
-
-(* compatible bases *)
-(* get a function that returns whether input is e-like *)
-QBasis[e_][expr_] :=
-	MatchQ[expr, e] \[Or] MatchQ[expr, Subscript[e, n_]] \
-	\[Or] MatchQ[expr, Derivative[1][e]] \[Or] MatchQ[expr, Derivative[1][Subscript[e, n_]]]
-(* e1 or e2 or... *)
-(* use an outer product where the multiplication is applying a map *)
-QBasis[e__][expr_] := Or @@ Flatten @ Outer[#1 @ #2 &, QBasis /@ {e}, {expr}]
-(* very based. could be a derivative, idfk anymore *)
-(* QUnbased \[DoubleLeftRightArrow] QDot always commutes *)
-(* QNumeric \[Implies] QUnbased *)
-QBased[\[Alpha]_?BraKetQ]
-(* derivative wrt \[Xi] is zero *)
-Independent[]
-
-(* inner product evaluation *)
+(* Bra-Ket Evaluation *)
 QEval::usage = 
 "QEval[\!\(\*TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\)] evaluates the BraKet \!\(\*TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\).";
-(* general *)
-(**QEval @ \[Alpha]_ := \[Alpha]*)
+
 (* homogeneity *)
 QEval @ f_[args__] := f @@ QEval /@ {args}
+
+(* general values *)
+QEval @ \[Alpha]_ := \[Alpha]
 
 (* Dirac delta functions *)
 QEval @ BraKet[{\[Xi]1_?(QBasis[x])}, {\[Xi]2_?(QBasis[x])}] := DiracDelta[\[Xi]1 - \[Xi]2];
@@ -195,6 +208,7 @@ QEval @ BraKet[{\[Mu]_?(QBasis[p])}, {f_}] := \!\(\*OverscriptBox[\(f\), \(~\)]\
 QEval @ BraKet[{g_}, {f_}] := g ~QInner~ f
 
 
+(* Inner Product *)
 QInner::usage="QInner[\!\(\*
 StyleBox[\"g\",\nFontSlant->\"Italic\"]\), \!\(\*
 StyleBox[\"f\",\nFontSlant->\"Italic\"]\)] \
@@ -211,11 +225,11 @@ in the basis \!\(\*
 StyleBox[\"e\",\nFontSlant->\"Italic\"]\).";
 (* confusion? check for missing primes *)
 QInner[g_, f_, e_:x] := \!\(
-\*SubsuperscriptBox[\(\[Integral]\), \(-\[Infinity]\), \(\[Infinity]\)]\(\*
+\*SubsuperscriptBox[\(\[Integral]\), \(-\[Infinity]\), \(\[Infinity]\)]\(QEval[\*
 TemplateBox[{"g", SuperscriptBox["e", "\[Prime]"]},
 "BraKet"] \*
 TemplateBox[{SuperscriptBox["e", "\[Prime]"], "f"},
-"BraKet"] \[DifferentialD]
+"BraKet"]] \[DifferentialD]
 \*SuperscriptBox[\(e\), \(\[Prime]\)]\)\)
 
 
@@ -223,12 +237,13 @@ TemplateBox[{SuperscriptBox["e", "\[Prime]"], "f"},
 QMean[fx_, f_] := QMean[fx, f, f]
 QMean[fx_, g_, f_] := Bra[{g}] ~QDot~ fx ~QDot~ Ket[{f}]
 
+
 (* Fourier Transform *)
 QFourier
 
 
 (* Safety On *)
-Protect @@ PATIENTS
+Protect @@ PATIENTS;
 Clear[PATIENTS]
 
 
