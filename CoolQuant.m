@@ -63,7 +63,7 @@ QObjQ[expr_] := OperatorQ[expr] \[Or] KetQ[expr] \[Or] BraQ[expr]
 
 (* Operators *)
 Operator = OverHat;
-\!\(\*OverscriptBox[\(x\), \(^\)]\)[fx_] := x fx
+\!\(\*OverscriptBox[\(\[Xi]_?\((QBasis[x])\)\), \(^\)]\)[fx_] := \[Xi] fx
 \!\(\*OverscriptBox[\(p\), \(^\)]\)[fx_] := -I \[HBar] \!\(
 \*SubscriptBox[\(\[PartialD]\), \(x\)]fx\)
 (* derivative *)
@@ -172,24 +172,28 @@ BraKet[{e_?(QBasis[x, p])}, {Q_ \[CenterDot] f_}] := Q ~QMult~ BraKet[{e}, {f}]
 (* Commutator *)
 Commutator::usage = 
 "Commutator[\!\(\*
-StyleBox[\"g\",\nFontSlant->\"Italic\"]\), \!\(\*
-StyleBox[\"h\",\nFontSlant->\"Italic\"]\)] evaluates the ring element commutator \!\(\*
-StyleBox[\"g\",\nFontSlant->\"Italic\"]\)\[CenterDot]\!\(\*
-StyleBox[\"h\",\nFontSlant->\"Italic\"]\) - \!\(\*
-StyleBox[\"h\",\nFontSlant->\"Italic\"]\)\[CenterDot]\!\(\*
-StyleBox[\"g\",\nFontSlant->\"Italic\"]\).
+	StyleBox[\"g\", \nFontSlant->\"Italic\"]\), \!\(\*
+	StyleBox[\"h\", \nFontSlant->\"Italic\"]\)] \
+evaluates the ring element commutator \!\(\*
+	StyleBox[\"g\", \nFontSlant->\"Italic\"]\) \[CenterDot] \!\(\*
+	StyleBox[\"h\", \nFontSlant->\"Italic\"]\) - \!\(\*
+	StyleBox[\"h\", \nFontSlant->\"Italic\"]\) \[CenterDot] \!\(\*
+	StyleBox[\"g\", \nFontSlant->\"Italic\"]\).
 Commutator[\!\(\*
-StyleBox[\"g\",\nFontSlant->\"Italic\"]\), \!\(\*
-StyleBox[\"h\",\nFontSlant->\"Italic\"]\), \!\(\*
-StyleBox[\"fx\",\nFontSlant->\"Italic\"]\)] applies the test function \!\(\*
-StyleBox[\"fx\",\nFontSlant->\"Italic\"]\) and divides it out.";
+	StyleBox[\"g\", \nFontSlant->\"Italic\"]\), \!\(\*
+	StyleBox[\"h\", \nFontSlant->\"Italic\"]\), \!\(\*
+	StyleBox[\"fx\", \nFontSlant->\"Italic\"]\)] \
+applies the test function \!\(\*
+	StyleBox[\"fx\",\nFontSlant->\"Italic\"]\) \
+and divides it out.";
 Commutator[g_, h_] := (g ~QDot~ h - h ~QDot~ g)
 Commutator[g_, h_, fx_] := Commutator[g, h] ~QMult~ fx / fx //Simplify
 
 
 (* Bra-Ket Evaluation *)
 QEval::usage = 
-"QEval[\!\(\*TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\)] evaluates the BraKet \!\(\*TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\).";
+"QEval[\!\(\*
+TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\)] evaluates the BraKet \!\(\*TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\).";
 
 (* homogeneity *)
 QEval @ f_[args__] := f @@ QEval /@ {args}
@@ -210,19 +214,25 @@ QEval @ BraKet[{g_}, {f_}] := g ~QInner~ f
 
 (* Inner Product *)
 QInner::usage="QInner[\!\(\*
-StyleBox[\"g\",\nFontSlant->\"Italic\"]\), \!\(\*
-StyleBox[\"f\",\nFontSlant->\"Italic\"]\)] \
-computes the inner product \
-\!\(\*TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\) \
+	StyleBox[\"g\", \nFontSlant->\"Italic\"]\), \!\(\*
+	StyleBox[\"f\", \nFontSlant->\"Italic\"]\)] \
+computes the inner product \!\(\*
+	TemplateBox[{
+			StyleBox[\"g\", FontSlant -> \"Italic\"],
+			StyleBox[\"f\", FontSlant -> \"Italic\"]
+		}, \n\"BraKet\"]\) \
 in the position basis.
 QInner[\!\(\*
-StyleBox[\"g\",\nFontSlant->\"Italic\"]\), \!\(\*
-StyleBox[\"f\",\nFontSlant->\"Italic\"]\), \!\(\*
-StyleBox[\"e\",\nFontSlant->\"Italic\"]\)] \
-computes the inner product \
-\!\(\*TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\) \
+	StyleBox[\"g\", \nFontSlant->\"Italic\"]\), \!\(\*
+	StyleBox[\"f\", \nFontSlant->\"Italic\"]\), \!\(\*
+	StyleBox[\"e\",\nFontSlant->\"Italic\"]\)] \
+computes the inner product \!\(\*
+	TemplateBox[{
+			StyleBox[\"g\", FontSlant -> \"Italic\"],
+			StyleBox[\"f\", FontSlant -> \"Italic\"]
+		}, \n\"BraKet\"]\) \
 in the basis \!\(\*
-StyleBox[\"e\",\nFontSlant->\"Italic\"]\).";
+	StyleBox[\"e\", \nFontSlant->\"Italic\"]\).";
 (* confusion? check for missing primes *)
 QInner[g_, f_, e_:x] := \!\(
 \*SubsuperscriptBox[\(\[Integral]\), \(-\[Infinity]\), \(\[Infinity]\)]\(QEval[\*
