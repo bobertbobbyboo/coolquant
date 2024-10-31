@@ -4,11 +4,15 @@ BeginPackage["CoolQuant`"];
 
 
 (* Constants/Variables *)
-VARASSUME = {m>0, \[Omega]>0, \[HBar]>0, c0>0, e_?(QBasis[x,p])\[Element]Reals};
-$Assumptions = If[$Assumptions===True, VARASSUME, Join[$Assumptions, VARASSUME]];
-SetAttributes[{m, \[Omega], \[HBar], c0}, Constant]
-(* protected. use rules to adjust values. *)
-Protect @@ {m, \[Omega], \[HBar], c0};
+CONSTS = {L, m, \[Omega], \[HBar], c0};
+(* add assumptions *)
+VARASSUME = {Sequence @@ Positive[CONSTS], e_?(QBasis[x, p])\[Element]Reals};
+$Assumptions = Assuming[VARASSUME, $Assumptions];
+(* make constants constant and protected.
+	use rules to adjust values. *)
+Evaluate @ CONSTS ~SetAttributes~ Constant
+Protect @@ CONSTS;
+ClearAll[CONSTS, VARASSUME]
 
 (* Number Questions *)
 (* \[HBar] etc. cannot be genuinely numeric with Mathematica's implementations
@@ -22,6 +26,7 @@ QNumericQ[expr_] := NumericQ[expr] \[Or] ConstantQ[expr]
 (* Parameter Conventions:
 	a, b etc. scalars
 	\[Alpha], \[Beta] etc. general objects
+	\[Xi] x-like, \[Pi] p-like
 	Bra[{g}], Ket[{f}] bra-ket
 	Overscript[O, ^], Overscript[Q, ^] operators
 	fx unevaluated expressions
@@ -91,6 +96,8 @@ QConj
 
 
 (* Dot Operation *)
+(* noncommutative multiplication *)
+(* commutativity is governed by the attribute Orderless *)
 QDot::usage = 
 "Generally noncommutative multiplication between quantum objects.";
 QDot = CenterDot;
@@ -254,7 +261,7 @@ QFourier
 
 (* Safety On *)
 Protect @@ PATIENTS;
-Clear[PATIENTS]
+ClearAll[PATIENTS]
 
 
 EndPackage[]
