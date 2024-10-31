@@ -3,11 +3,18 @@
 BeginPackage["CoolQuant`"];
 
 
+(* Assumptions *)
+(* add one or a list of assumptions *)
+AddGlobalAssumption[expr_] := (
+	$Assumptions = Assuming[expr, $Assumptions]
+)
+
+
 (* Constants/Variables *)
+(* square well width, mass, frequency, Planck constant, speed of light *)
 CONSTS = {L, m, \[Omega], \[HBar], c0};
 (* add assumptions *)
-VARASSUME = {Sequence @@ Positive[CONSTS], e_?(QBasis[x, p])\[Element]Reals};
-$Assumptions = Assuming[VARASSUME, $Assumptions];
+AddGlobalAssumption @ Positive[CONSTS];
 (* make constants constant and protected.
 	use rules to adjust values. *)
 Evaluate @ CONSTS ~SetAttributes~ Constant
@@ -37,6 +44,9 @@ QNumericQ[expr_] := NumericQ[expr] \[Or] ConstantQ[expr]
 
 
 (* Compatible Bases *)
+StdBases = Sequence[x, p];
+AddGlobalAssumption @ (e_?(QBasis[x, p])\[Element]Reals)
+
 (* get a function that returns whether input is e-like *)
 QBasis[e_][expr_] :=
 	MatchQ[expr, e] \[Or] MatchQ[expr, Subscript[e, n_]] \
