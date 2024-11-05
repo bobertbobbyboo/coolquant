@@ -5,9 +5,8 @@ BeginPackage["CoolQuant`"];
 
 (* Assumptions *)
 (* add one or a list of assumptions *)
-AddGlobalAssumption[expr_] := (
+AddGlobalAssumption[expr_] :=
 	$Assumptions = Assuming[expr, $Assumptions]
-)
 
 
 (* Constants/Variables *)
@@ -70,9 +69,17 @@ OperatorQ[expr_] :=
 	MatchQ[Expand @ expr, a_. _Operator^b_. + \[Beta]_.] \
 	\[Or] MatchQ[Expand @ expr, a_. \[Alpha]_ ~QDot~ Q_?OperatorQ + \[Beta]_.] \
 	\[Or] MatchQ[Expand @ expr, a_. Q_?OperatorQ ~QDot~ \[Alpha]_ + \[Beta]_.]
-KetQ[expr_] := MatchQ[expr, a_. _Ket] \[Or] MatchQ[expr, a_. \[Alpha]_ ~QDot~ \[Beta]_?KetQ]
-BraQ[expr_] := MatchQ[expr, a_. _Bra] \[Or] MatchQ[expr, a_. \[Beta]_?BraQ ~QDot~ \[Alpha]_]
-BraKetQ[expr_] := MatchQ[expr, _BraKet] \[Or] MatchQ[expr, a_?QNumericQ _BraKet]
+(* linear combinations of kets are kets, same with bras *)
+KetQ[expr_] :=
+	MatchQ[expr, a_. _Ket] \
+	\[Or] MatchQ[expr, a_. \[Alpha]_ ~QDot~ \[Beta]_?KetQ] \
+	\[Or] MatchQ[expr, \[Alpha]_?KetQ + \[Beta]_?KetQ]
+BraQ[expr_] :=
+	MatchQ[expr, a_. _Bra] \
+	\[Or] MatchQ[expr, a_. \[Beta]_?BraQ ~QDot~ \[Alpha]_] \
+	\[Or] MatchQ[expr, \[Alpha]_?BraQ + \[Beta]_?BraQ]
+BraKetQ[expr_] := 
+	MatchQ[expr, a_. _BraKet] (* need more case *)
 QObjQ[expr_] := OperatorQ[expr] \[Or] KetQ[expr] \[Or] BraQ[expr]
 
 
@@ -248,7 +255,7 @@ computes the inner product \!\(\*
 			StyleBox[\"g\", FontSlant -> \"Italic\"],
 			StyleBox[\"f\", FontSlant -> \"Italic\"]
 		}, \n\"BraKet\"]\) \
-in the basis \!\(\*
+with respect to the basis element \!\(\*
 	StyleBox[\"e\", \nFontSlant->\"Italic\"]\).";
 (* confusion? check for missing primes *)
 QInner[g_, f_, e_:x] := \!\(
