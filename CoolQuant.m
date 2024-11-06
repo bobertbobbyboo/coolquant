@@ -11,7 +11,7 @@ AddGlobalAssumption[expr_] :=
 
 (* Constants/Variables *)
 (* square well width, mass, frequency, Planck constant, speed of light *)
-CONSTS = {L, m, \[Omega], \[HBar], c0};
+CONSTS = {l, m, \[Omega], \[HBar], c0};
 (* add assumptions *)
 AddGlobalAssumption @ Positive[CONSTS];
 (* make constants constant and protected.
@@ -79,7 +79,7 @@ BraQ[expr_] :=
 	\[Or] MatchQ[expr, a_. \[Beta]_?BraQ ~QDot~ \[Alpha]_] \
 	\[Or] MatchQ[expr, \[Alpha]_?BraQ + \[Beta]_?BraQ]
 BraKetQ[expr_] := 
-	MatchQ[expr, a_. _BraKet] (* need more case *)
+	!FreeQ[expr, _BraKet]
 QObjQ[expr_] := OperatorQ[expr] \[Or] KetQ[expr] \[Or] BraQ[expr]
 
 
@@ -154,6 +154,10 @@ SuperscriptBox[\(Q_\), \(n_\)], \(^\)]\) ^:= \!\(\*OverscriptBox[\(Q\), \(^\)]\)
 (* bras n kets *)
 Bra[{g_}] ~QDot~ Ket[{f_}] ^:= BraKet[{g}, {f}]
 \!\(\*OverscriptBox[\(Q_\), \(^\)]\) ~QDot~ Ket[{f_}] ^:= Ket[{\!\(\*OverscriptBox[\(Q\), \(^\)]\) ~QDot~ f}]
+(* on function projected into basis *)
+(* delay operator evaluation until QEval *)
+QDot[Bra[{e_?(QBasis[x, p])}], Q_, Ket[{f_}]] := Q ~QDot~ BraKet[{e}, {f}]
+BraKet[{e_?(QBasis[x, p])}, {Q_ ~QDot~ f_}] := Q ~QDot~ BraKet[{e}, {f}]
 
 (* disobedient \[Times] usage edge case *)
 \[Alpha]_ Ket[{f_}] ^:= \[Alpha] ~QDot~ Ket[{f}] /; !QNumericQ[\[Alpha]]
@@ -178,16 +182,12 @@ QMult[O_, Q_, fx_] := O ~QMult~ (Q ~QMult~ fx)*)
 (O_ ~QDot~ Q_) ~QMult~ fx_ := O ~QMult~ (Q ~QMult~ fx)
 
 (* nonoperator cases *)
-\[Alpha]_ ~QMult~ fx_ := \[Alpha] fx /; !QObjQ[\[Alpha]]
+\[Alpha]_ ~QMult~ fx_ := \[Alpha] QEval @ fx /; !QObjQ[\[Alpha]]
 \[Alpha]_?QObjQ ~QMult~ fx_ := \[Alpha] \[CenterDot] fx /; !OperatorQ[\[Alpha]]
 
 (* base operator applications *)
-(* delay application if fx is a bra-ket *)
-\!\(\*OverscriptBox[\(\(Q_\)\(\ \)\), \(^\)]\)~QMult~ fx_ ^:= \!\(\*OverscriptBox[\(Q\), \(^\)]\) @ fx /; !BraKetQ[fx]
+\!\(\*OverscriptBox[\(\(Q_\)\(\ \)\), \(^\)]\)~QMult~ fx_ ^:= \!\(\*OverscriptBox[\(Q\), \(^\)]\) @ QEval @ fx
 (\!\(\*OverscriptBox[\(Q_\), \(^\)]\)^n_) ~QMult~ fx_ ^:= \!\(\*OverscriptBox[\(Q\), \(^\)]\) ~QMult~ ((\!\(\*OverscriptBox[\(Q\), \(^\)]\)^(n-1)) ~QMult~ fx)
-(* on function projected into basis *)
-QDot[Bra[{e_?(QBasis[x, p])}], Q_, Ket[{f_}]] := Q ~QMult~ BraKet[{e}, {f}]
-BraKet[{e_?(QBasis[x, p])}, {Q_ \[CenterDot] f_}] := Q ~QMult~ BraKet[{e}, {f}]
 
 (* function composition *)
 (*(f_ ~QDot~ g_)[args__] := f ~QMult~ g @ args*)
@@ -234,6 +234,9 @@ QEval @ BraKet[{g_}, {e_?(QBasis[x, p])}] := Simplify[QEval @ BraKet[{e}, {g}]\[
 QEval @ BraKet[{\[Xi]_?(QBasis[x])}, {f_}] := f[\[Xi]]
 QEval @ BraKet[{\[Mu]_?(QBasis[p])}, {f_}] := \!\(\*OverscriptBox[\(f\), \(~\)]\)[\[Mu]]
 QEval @ BraKet[{g_}, {f_}] := g ~QInner~ f
+
+(* QDot to QMult *)
+QEval @ QDot[args__] := QMult[args]
 
 
 (* Inner Product *)
