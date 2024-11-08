@@ -112,7 +112,7 @@ Unprotect @@ PATIENTS;
 Ket /: Ket[{f_}]\[ConjugateTranspose] := Bra[{f}]
 Bra /: Bra[{f_}]\[ConjugateTranspose] := Ket[{f}]
 
-QHermitianQ
+HermitianQ
 QConj
 
 
@@ -120,7 +120,13 @@ QConj
 (* noncommutative multiplication *)
 (* commutativity is governed by the attribute Orderless *)
 QDot::usage = 
-"Generally noncommutative multiplication between quantum objects.";
+"\!\(\*
+	StyleBox[\"\[Alpha]\", \"TR\"]
+\) \[CenterDot] \!\(\*
+	StyleBox[\"\[Beta]\", \"TR\"]
+\) \[CenterDot] \!\(\*
+	StyleBox[\"\[Gamma]\", \"TR\"]
+\) represents a generally noncommutative product of quantum objects.";
 QDot = CenterDot;
 Off @ QDot::shdw
 SetAttributes[CenterDot, {Flat, OneIdentity}]
@@ -165,8 +171,46 @@ BraKet[{e_?(QBasis[x, p])}, {Q_ ~QDot~ f_}] := Q ~QDot~ BraKet[{e}, {f}]
 
 (* Operator Application Product *)
 QMult::usage = 
-"Generally noncommutative multiplication for applying operators \
-to expressions.";
+"Generally noncommutative application product.
+For an operator \!\(\*
+	StyleBox[
+		OverscriptBox[\"Q\", \"^\"],
+		\"TI\"
+	]
+\), \!\(\*
+	StyleBox[
+		OverscriptBox[\"Q\", \"^\"],
+		\"TI\"
+	]
+\) ** \!\(\*
+	StyleBox[\"fx\", \"TI\"]
+\) applies \!\(\*
+	StyleBox[
+		OverscriptBox[\"Q\", \"^\"], 
+		\"TI\"
+	]
+\) to the expression \!\(\*
+	StyleBox[\"fx\", \"TI\"]
+\) as \!\(\*
+	StyleBox[
+		OverscriptBox[\"Q\", \"^\"], 
+		\"TI\"
+	]
+\)[\!\(\*
+	StyleBox[\"fx\", \"TI\"]
+\)].
+For a nonoperator quantum object \!\(\*
+	StyleBox[\"\[Alpha]\", \"TR\"]
+\), \!\(\*
+	StyleBox[\"\[Alpha]\", \"TR\"]
+\) ** \!\(\*
+	StyleBox[\"fx\", \"TI\"]
+\) becomes \!\(\*
+	StyleBox[\"\[Alpha]\", \"TR\"]
+\) \[CenterDot] \!\(\*
+	StyleBox[\"fx\", \"TI\"]
+\).
+Otherwise, the operation defaults to usual multiplication."
 QMult = NonCommutativeMultiply;
 (*SetAttributes[Application, {Flat, OneIdentity}]*)
 
@@ -196,29 +240,77 @@ QMult[O_, Q_, fx_] := O ~QMult~ (Q ~QMult~ fx)*)
 (* Commutator *)
 Commutator::usage = 
 "Commutator[\!\(\*
-	StyleBox[\"g\", \nFontSlant->\"Italic\"]\), \!\(\*
-	StyleBox[\"h\", \nFontSlant->\"Italic\"]\)] \
-evaluates the ring element commutator \!\(\*
-	StyleBox[\"g\", \nFontSlant->\"Italic\"]\) \[CenterDot] \!\(\*
-	StyleBox[\"h\", \nFontSlant->\"Italic\"]\) - \!\(\*
-	StyleBox[\"h\", \nFontSlant->\"Italic\"]\) \[CenterDot] \!\(\*
-	StyleBox[\"g\", \nFontSlant->\"Italic\"]\).
+	StyleBox[\"g\", \"TI\"]
+\), \!\(\*
+	StyleBox[\"h\", \"TI\"]
+\)] evaluates the ring element commutator \!\(\*
+	StyleBox[\"g\", \"TI\"]
+\) \[CenterDot] \!\(\*
+	StyleBox[\"h\", \"TI\"]
+\) - \!\(\*
+	StyleBox[\"h\", \"TI\"]
+\) \[CenterDot] \!\(\*
+	StyleBox[\"g\", \"TI\"]
+\).
 Commutator[\!\(\*
-	StyleBox[\"g\", \nFontSlant->\"Italic\"]\), \!\(\*
-	StyleBox[\"h\", \nFontSlant->\"Italic\"]\), \!\(\*
-	StyleBox[\"fx\", \nFontSlant->\"Italic\"]\)] \
-applies the test function \!\(\*
-	StyleBox[\"fx\",\nFontSlant->\"Italic\"]\) \
-and divides it out.";
+	StyleBox[\"g\", \"TI\"]
+\), \!\(\*
+	StyleBox[\"h\", \"TI\"]
+\), \!\(\*
+	StyleBox[\"fx\", \"TI\"]
+\)] applies the test expression \!\(\*
+	StyleBox[\"fx\", \"TI\"]
+\) and divides it out.";
 Commutator[g_, h_] := (g ~QDot~ h - h ~QDot~ g)
 Commutator[g_, h_, fx_] := Commutator[g, h] ~QMult~ fx / fx //Simplify
+
+QTest (* apply f[x] and divide out *)
 
 
 (* Bra-Ket (and Operator Structure) Evaluation *)
 QEval::usage = 
 "QEval[\!\(\*
-TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\)] evaluates the BraKet \!\(\*TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\).";
-
+	TemplateBox[
+		{
+			StyleBox[\"g\", \"TI\"], 
+			StyleBox[\"f\", \"TI\"]
+		},
+		\"BraKet\"
+	]
+\)] evaluates the bra-ket \!\(\*
+	TemplateBox[
+		{
+			StyleBox[\"g\", \"TI\"], 
+			StyleBox[\"f\", \"TI\"]
+		},
+		\"BraKet\"
+	]
+\).
+QEval[\!\(\*
+	StyleBox[\"f\", \"TI\"]
+\)[\!\(\*
+	SubscriptBox[
+		StyleBox[\"expr\", \"TI\"], 
+		\(1\)
+	]
+\), \!\(\*
+	SubscriptBox[
+		StyleBox[\"expr\", \"TI\"], 
+		\(2\)
+	]
+\), ...]] evaluates each inner expression recursively, i.e. \!\(\*
+	StyleBox[\"f\", \"TI\"]
+\)[QEval[\!\(\*
+	SubscriptBox[
+		StyleBox[\"expr\", \"TI\"], 
+		\(1\)
+	]
+\)], QEval[\!\(\*
+	SubscriptBox[
+		StyleBox[\"expr\", \"TI\"], 
+		\(2\)
+	]
+\)], ...].";
 (* general values *)
 QEval @ \[Alpha]_ := \[Alpha]
 (* direct operator structure evaluation *)
@@ -240,26 +332,37 @@ QEval @ f_[args__] := f @@ QEval /@ {args} /; !QHeadQ[f[args]]
 
 
 (* Inner Product *)
-QInner::usage="QInner[\!\(\*
-	StyleBox[\"g\", \nFontSlant->\"Italic\"]\), \!\(\*
-	StyleBox[\"f\", \nFontSlant->\"Italic\"]\)] \
-computes the inner product \!\(\*
-	TemplateBox[{
-			StyleBox[\"g\", FontSlant -> \"Italic\"],
-			StyleBox[\"f\", FontSlant -> \"Italic\"]
-		}, \n\"BraKet\"]\) \
-in the position basis.
+QInner::usage =
+"QInner[\!\(\*
+	StyleBox[\"g\", \"TI\"]
+\), \!\(\*
+	StyleBox[\"f\", \"TI\"]
+\)] computes the inner product \!\(\*
+	TemplateBox[
+		{
+			StyleBox[\"g\", \"TI\"],
+			StyleBox[\"f\", \"TI\"]
+		}, 
+		\"BraKet\"
+	]
+\) in the position basis.
 QInner[\!\(\*
-	StyleBox[\"g\", \nFontSlant->\"Italic\"]\), \!\(\*
-	StyleBox[\"f\", \nFontSlant->\"Italic\"]\), \!\(\*
-	StyleBox[\"e\",\nFontSlant->\"Italic\"]\)] \
-computes the inner product \!\(\*
-	TemplateBox[{
-			StyleBox[\"g\", FontSlant -> \"Italic\"],
-			StyleBox[\"f\", FontSlant -> \"Italic\"]
-		}, \n\"BraKet\"]\) \
-with respect to the basis element \!\(\*
-	StyleBox[\"e\", \nFontSlant->\"Italic\"]\).";
+	StyleBox[\"g\", \"TI\"]
+\), \!\(\*
+	StyleBox[\"f\", \"TI\"]
+\), \!\(\*
+	StyleBox[\"e\", \"TI\"]
+\)] computes the inner product \!\(\*
+	TemplateBox[
+		{
+			StyleBox[\"g\", \"TI\"],
+			StyleBox[\"f\", \"TI\"]
+		},
+		\"BraKet\"
+	]
+\) with respect to the basis element \!\(\*
+	StyleBox[\"\!\(\*SuperscriptBox[\(e\), \(\[Prime]\)]\)\", \"TI\"]
+\).";
 (* confusion? check for missing primes *)
 QInner[g_, f_, e_:x] := \!\(
 \*SubsuperscriptBox[\(\[Integral]\), \(-\[Infinity]\), \(\[Infinity]\)]\(QEval[\*
@@ -271,6 +374,7 @@ TemplateBox[{SuperscriptBox["e", "\[Prime]"], "f"},
 
 
 (* Expectation Value *)
+(* lazy by default, use QEval for numeric *)
 QMean[fx_, f_] := QMean[fx, f, f]
 QMean[fx_, g_, f_] := Bra[{g}] ~QDot~ fx ~QDot~ Ket[{f}]
 
