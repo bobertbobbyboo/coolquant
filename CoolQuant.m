@@ -26,6 +26,7 @@ while preserving assumptions, so check for constancy instead. *)
 (* Check evals the first expression and returns, unless messages are generated,
 in which case it returns the second. Quiet suppresses the messages. *)
 ConstantQ[expr_] := Quiet @ Check[Attributes[expr] ~ContainsAll~ {Constant}, False]
+(* scalar-like *)
 (* use QNumeric for symbols/values, QBased for expressions *)
 QNumericQ[expr_] := NumericQ[expr] \[Or] ConstantQ[expr]
 
@@ -78,9 +79,12 @@ BraQ[expr_] :=
 	MatchQ[expr, a_. _Bra] \
 	\[Or] MatchQ[expr, a_. \[Beta]_?BraQ ~QDot~ \[Alpha]_] \
 	\[Or] MatchQ[expr, \[Alpha]_?BraQ + \[Beta]_?BraQ]
+QVectorQ[expr_]
 BraKetQ[expr_] := 
 	!FreeQ[expr, _BraKet]
 QObjQ[expr_] := OperatorQ[expr] \[Or] KetQ[expr] \[Or] BraQ[expr]
+(* whether head indicates base Q object *)
+QHeadQ[expr_] := {Operator, Ket, Bra} ~AnyTrue~ SameAs[Head @ expr]
 
 
 (* Operators *)
@@ -122,10 +126,6 @@ Off @ QDot::shdw
 SetAttributes[CenterDot, {Flat, OneIdentity}]
 (* funny notation: a ~QDot~ b \[Congruent] a \[CircleDot] b *)
 
-(* a central element (element of the ring center C(R)) commutes with every other element *)
-(* !QObj \[And] (QNumeric \[Or] QUnbased) *)
-CentralQ[expr_]
-
 (* general arithmetic *)
 (* I agonized over the \[Alpha]\[CenterDot]b\[Beta] case for a full weekend ok. any issues arising from use of
 	commutative multiplication instead of \[CenterDot] & without parentheses are not my problem 
@@ -136,7 +136,7 @@ CentralQ[expr_]
 (* powers *)
 (\[Alpha]_^(n_:1)) ~QDot~ (\[Alpha]_^(m_:1)) := \[Alpha]^(n+m)
 
-(* commutativity for QNumerics/Centrals *)
+(* commutativity/homogeneity for QNumerics *)
 a_?QNumericQ ~QDot~ \[Alpha]_ := a \[Alpha]
 \[Alpha]_ ~QDot~ a_?QNumericQ := a \[Alpha]
 (a_?QNumericQ \[Alpha]_) ~QDot~ \[Beta]_ := a \[Alpha] ~QDot~ \[Beta]
@@ -214,16 +214,16 @@ Commutator[g_, h_] := (g ~QDot~ h - h ~QDot~ g)
 Commutator[g_, h_, fx_] := Commutator[g, h] ~QMult~ fx / fx //Simplify
 
 
-(* Bra-Ket Evaluation *)
+(* Bra-Ket (and Operator Structure) Evaluation *)
 QEval::usage = 
 "QEval[\!\(\*
 TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\)] evaluates the BraKet \!\(\*TemplateBox[{StyleBox[\"g\", FontSlant -> \"Italic\"], StyleBox[\"f\", FontSlant -> \"Italic\"]},\n\"BraKet\"]\).";
 
-(* homogeneity *)
-QEval @ f_[args__] := f @@ QEval /@ {args}
-
 (* general values *)
 QEval @ \[Alpha]_ := \[Alpha]
+(* direct operator structure evaluation *)
+(* QDot -> QMult *)
+QEval @ Q_?OperatorQ := Q ~QMult~ 1
 
 (* Dirac delta functions *)
 QEval @ BraKet[{\[Xi]1_?(QBasis[x])}, {\[Xi]2_?(QBasis[x])}] := DiracDelta[\[Xi]1 - \[Xi]2];
@@ -235,8 +235,8 @@ QEval @ BraKet[{\[Xi]_?(QBasis[x])}, {f_}] := f[\[Xi]]
 QEval @ BraKet[{\[Mu]_?(QBasis[p])}, {f_}] := \!\(\*OverscriptBox[\(f\), \(~\)]\)[\[Mu]]
 QEval @ BraKet[{g_}, {f_}] := g ~QInner~ f
 
-(* QDot to QMult *)
-QEval @ QDot[args__] := QMult[args]
+(* recursive application *)
+QEval @ f_[args__] := f @@ QEval /@ {args} /; !QHeadQ[f[args]]
 
 
 (* Inner Product *)
