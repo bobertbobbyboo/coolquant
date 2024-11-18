@@ -103,7 +103,7 @@ Operator = OverHat;
 	define function properties (e.g. distributivity, associativity) before
 	specific object cases! *)
 (* reprotect at the end!! *)
-PATIENTS = {Plus, Times, Power, CenterDot, NonCommutativeMultiply};
+PATIENTS = {Plus, Times, Power, Expand, CenterDot, NonCommutativeMultiply};
 Unprotect @@ PATIENTS;
 
 
@@ -141,6 +141,8 @@ SetAttributes[CenterDot, {Flat, OneIdentity}]
 (\[Alpha]_ + \[Beta]_) ~QDot~ \[Gamma]_ := \[Alpha] ~QDot~ \[Gamma] + \[Beta] ~QDot~ \[Gamma]
 (* powers *)
 (\[Alpha]_^(n_:1)) ~QDot~ (\[Alpha]_^(m_:1)) := \[Alpha]^(n+m)
+(* power expansion *)
+Expand[(\[Alpha]_?OperatorQ)^n_ + \[Beta]_.] := \[Alpha] ~QDot~ Expand[\[Alpha]^(n-1)] + Expand[\[Beta]]
 
 (* commutativity/homogeneity for QNumerics *)
 a_?QNumericQ ~QDot~ \[Alpha]_ := a \[Alpha]
