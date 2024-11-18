@@ -67,7 +67,7 @@ Independent[]
 (* the -Q (question) functions find generalized objects of a type.
 	base types are associated with heads, e.g. _Ket for kets. *)
 OperatorQ[expr_] :=
-	MatchQ[Expand @ expr, a_. _Operator^b_. + \[Beta]_.] \
+	MatchQ[Expand @ expr, a_. _Operator + \[Beta]_.] \
 	\[Or] MatchQ[Expand @ expr, a_. \[Alpha]_ ~QDot~ Q_?OperatorQ + \[Beta]_.] \
 	\[Or] MatchQ[Expand @ expr, a_. Q_?OperatorQ ~QDot~ \[Alpha]_ + \[Beta]_.]
 (* linear combinations of kets are kets, same with bras *)
@@ -103,7 +103,7 @@ Operator = OverHat;
 	define function properties (e.g. distributivity, associativity) before
 	specific object cases! *)
 (* reprotect at the end!! *)
-PATIENTS = {Plus, Times, Power, Expand, CenterDot, NonCommutativeMultiply};
+PATIENTS = {Plus, Times, Power, CenterDot, NonCommutativeMultiply};
 Unprotect @@ PATIENTS;
 
 
@@ -129,10 +129,12 @@ QDot::usage =
 \) represents a generally noncommutative product of quantum objects.";
 QDot = CenterDot;
 Off @ QDot::shdw
-SetAttributes[CenterDot, {Flat, OneIdentity}]
+CenterDot ~SetAttributes~ {Flat, OneIdentity}
 (* funny notation: a ~QDot~ b \[Congruent] a \[CircleDot] b *)
 
 (* general arithmetic *)
+(* empty defaults *)
+Evaluate @ QDot /: Default[QDot] = 1;
 (* I agonized over the \[Alpha]\[CenterDot]b\[Beta] case for a full weekend ok. any issues arising from use of
 	commutative multiplication instead of \[CenterDot] & without parentheses are not my problem 
 	\.af\_(\:30c4)_/\.af *)
@@ -140,9 +142,9 @@ SetAttributes[CenterDot, {Flat, OneIdentity}]
 \[Alpha]_ ~QDot~ (\[Beta]_ + \[Gamma]_) := \[Alpha] ~QDot~ \[Beta] + \[Alpha] ~QDot~ \[Gamma]
 (\[Alpha]_ + \[Beta]_) ~QDot~ \[Gamma]_ := \[Alpha] ~QDot~ \[Gamma] + \[Beta] ~QDot~ \[Gamma]
 (* powers *)
-(\[Alpha]_^(n_:1)) ~QDot~ (\[Alpha]_^(m_:1)) := \[Alpha]^(n+m)
+(\[Alpha]_^(n_.)) ~QDot~ (\[Alpha]_^(m_.)) := \[Alpha]^(n+m)
 (* power expansion *)
-Expand[(\[Alpha]_?OperatorQ)^n_ + \[Beta]_.] := \[Alpha] ~QDot~ Expand[\[Alpha]^(n-1)] + Expand[\[Beta]]
+(*Expand[(\[Alpha]_?OperatorQ)^n_ + \[Beta]_.] := \[Alpha] ~QDot~ Expand[\[Alpha]^(n-1)] + Expand[\[Beta]]*)
 
 (* commutativity/homogeneity for QNumerics *)
 a_?QNumericQ ~QDot~ \[Alpha]_ := a \[Alpha]
@@ -151,8 +153,6 @@ a_?QNumericQ ~QDot~ \[Alpha]_ := a \[Alpha]
 \[Alpha]_ ~QDot~ (b_?QNumericQ \[Beta]_) := b \[Alpha] ~QDot~ \[Beta]
 
 (* compound operator structures *)
-(*Overscript[(Q_^(n_:1)), ^] ~QDot~ Overscript[(Q_^(m_:1)), ^] ^:= Overscript[Q^(n+m), ^]*)
-(*Overscript[O_, ^] ~QDot~ Overscript[Q_, ^] ^:= Overscript[(O ~QDot~ Q), ^]*)
 (* translations *)
 \!\(\*OverscriptBox[
 SuperscriptBox[\(Q_\), \(n_\)], \(^\)]\) ^:= \!\(\*OverscriptBox[\(Q\), \(^\)]\)^n
@@ -169,6 +169,14 @@ BraKet[{e_?(QBasis[x, p])}, {Q_ ~QDot~ f_}] := Q ~QDot~ BraKet[{e}, {f}]
 
 (* disobedient \[Times] usage edge case *)
 \[Alpha]_ Ket[{f_}] ^:= \[Alpha] ~QDot~ Ket[{f}] /; !QNumericQ[\[Alpha]]
+
+
+(* Expanding QDot Powers *)
+QExpand::usage = 
+"Expand powers of Q objects with the product QDot.";
+
+(* general *)
+QExpand[\[Alpha]_ \[Beta]_. ~QDot~ \[Gamma]_]
 
 
 (* Operator Application Product *)
@@ -214,7 +222,7 @@ For a nonoperator quantum object \!\(\*
 \).
 Otherwise, the operation defaults to usual multiplication."
 QMult = NonCommutativeMultiply;
-(*SetAttributes[Application, {Flat, OneIdentity}]*)
+(*Application ~SetAttributes~ {Flat, OneIdentity}*)
 
 (* evaluation order *)(*
 QMult[O_, Q_, fx_] := O ~QMult~ (Q ~QMult~ fx)*)
