@@ -224,14 +224,16 @@ QMult[O_, Q_, fx_] := O ~QMult~ (Q ~QMult~ fx)*)
 (a_ Q_) ~QMult~ fx_ := a Q ~QMult~ fx
 (* QDot compatibility *)
 (O_ ~QDot~ Q_) ~QMult~ fx_ := O ~QMult~ (Q ~QMult~ fx)
+(* repeated application/QDot power compatibility *)
+(Q_?OperatorQ^n_) ~QMult~ fx_ := (Q^(n-1)) ~QMult~ (Q ~QMult~ fx)
 
 (* nonoperator cases *)
 \[Alpha]_ ~QMult~ fx_ := \[Alpha] QEval @ fx /; !QObjQ[\[Alpha]]
 \[Alpha]_?QObjQ ~QMult~ fx_ := \[Alpha] \[CenterDot] fx /; !OperatorQ[\[Alpha]]
 
-(* base operator applications *)
+(* base operator application *)
+(* autoevaluation for convenience *)
 \!\(\*OverscriptBox[\(\(Q_\)\(\ \)\), \(^\)]\)~QMult~ fx_ ^:= \!\(\*OverscriptBox[\(Q\), \(^\)]\) @ QEval @ fx
-(\!\(\*OverscriptBox[\(Q_\), \(^\)]\)^n_) ~QMult~ fx_ ^:= \!\(\*OverscriptBox[\(Q\), \(^\)]\) ~QMult~ ((\!\(\*OverscriptBox[\(Q\), \(^\)]\)^(n-1)) ~QMult~ fx)
 
 (* function composition *)
 (*(f_ ~QDot~ g_)[args__] := f ~QMult~ g @ args*)
@@ -370,8 +372,8 @@ TemplateBox[{"g", "e"},
 "BraKet"] \*
 TemplateBox[{"e", "f"},
 "BraKet"]] /. e -> 
-\*SuperscriptBox[\(e\), \(\[Prime]\)])\) \[DifferentialD]
-\*SuperscriptBox[\(e\), \(\[Prime]\)]\)\)
+\*SuperscriptBox[\(e\), \(\[Prime]\)])\) \(\(\[DifferentialD]\)
+\*SuperscriptBox[\(e\), \(\[Prime]\)]\(\ \)\( (*\ substitution\ is\ temp\ behavior, \ try\ QEval\ for\ operators\ *) \)\)\)\)
 
 
 (* Expectation Value *)
