@@ -365,11 +365,12 @@ QInner[\!\(\*
 \).";
 (* confusion? check for missing primes *)
 QInner[g_, f_, e_:x] := \!\(
-\*SubsuperscriptBox[\(\[Integral]\), \(-\[Infinity]\), \(\[Infinity]\)]\(QEval[\*
-TemplateBox[{"g", SuperscriptBox["e", "\[Prime]"]},
+\*SubsuperscriptBox[\(\[Integral]\), \(-\[Infinity]\), \(\[Infinity]\)]\(\((QEval[\*
+TemplateBox[{"g", "e"},
 "BraKet"] \*
-TemplateBox[{SuperscriptBox["e", "\[Prime]"], "f"},
-"BraKet"]] \[DifferentialD]
+TemplateBox[{"e", "f"},
+"BraKet"]] /. e -> 
+\*SuperscriptBox[\(e\), \(\[Prime]\)])\) \[DifferentialD]
 \*SuperscriptBox[\(e\), \(\[Prime]\)]\)\)
 
 
