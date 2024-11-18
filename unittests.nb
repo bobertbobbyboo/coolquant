@@ -1,0 +1,2136 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 14.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     89907,       2128]
+NotebookOptionsPosition[     88423,       2091]
+NotebookOutlinePosition[     88919,       2109]
+CellTagsIndexPosition[     88876,       2106]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"Get", "[", 
+  RowBox[{"\"\<CoolQuant`\>\"", ",", 
+   RowBox[{"Path", "->", "\"\<.\>\""}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.940084617593561*^9, 3.940084642524824*^9}, 
+   3.940084680720777*^9},
+ CellLabel->"In[265]:=",
+ CellID->1470065049,ExpressionUUID->"4bbe3360-d5c0-4db7-9cb4-28b6539e323c"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"?", "QDot"}], "\[IndentingNewLine]", 
+ RowBox[{"?", "QMult"}], "\[IndentingNewLine]", 
+ RowBox[{"?", "Commutator"}], "\[IndentingNewLine]", 
+ RowBox[{"?", "QEval"}], "\[IndentingNewLine]", 
+ RowBox[{"?", "QInner"}]}], "Input",
+ CellChangeTimes->{{3.940084601468095*^9, 3.9400846082104816`*^9}, {
+  3.940084983375091*^9, 3.940085016461082*^9}},
+ CellLabel->"In[266]:=",
+ CellID->773134936,ExpressionUUID->"158bc394-539b-4942-b334-a1a6241d7a02"],
+
+Cell[BoxData[
+ InterpretationBox[
+  StyleBox[
+   FrameBox[
+    DynamicModuleBox[{System`InformationDump`open$$ = False, 
+     System`InformationDump`mouseOver$$ = False}, 
+     PaneSelectorBox[{True->
+      TagBox[GridBox[{
+         {
+          ItemBox[
+           PaneBox[
+            StyleBox[
+             TagBox[
+              TooltipBox[
+               StyleBox["\<\" Symbol\"\>", "InformationRowLabel",
+                StripOnInput->False],
+               "\"Symbol\"",
+               TooltipStyle->"TextStyling"],
+              Annotation[#, "Symbol", "Tooltip"]& ], "InformationTitleText",
+             StripOnInput->False,
+             BaseStyle -> None],
+            FrameMargins->{{4, 0}, {-1, 1}}],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           PaneBox[
+            
+            StyleBox["\<\"\\!\\(\\*\\n\\tStyleBox[\\\"\[Alpha]\\\", \
+\\\"TR\\\"]\\n\\) \[CenterDot] \\!\\(\\*\\n\\tStyleBox[\\\"\[Beta]\\\", \
+\\\"TR\\\"]\\n\\) \[CenterDot] \\!\\(\\*\\n\\tStyleBox[\\\"\[Gamma]\\\", \
+\\\"TR\\\"]\\n\\) represents a generally noncommutative product of quantum \
+objects.\"\>", "InformationUsageText",
+             StripOnInput->False,
+             LineSpacing->{1.5, 1.5, 3.}],
+            FrameMargins->{{10, 10}, {8, 10}}],
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False]},
+         {
+          PaneBox[
+           TagBox[GridBox[{
+              {
+               StyleBox[
+                TagBox[
+                 TooltipBox[
+                  StyleBox["\<\" Assignment\"\>", "InformationRowLabel",
+                   StripOnInput->False],
+                  "\"OwnValues\"",
+                  TooltipStyle->"TextStyling"],
+                 Annotation[#, "OwnValues", "Tooltip"]& ], "DialogStyle",
+                StripOnInput->False]},
+              {
+               TemplateBox[{"\"\[ThinSpace]\"", 
+                 GridBox[{{
+                    RowBox[{"QDot", "=", "CenterDot"}]}, {" "}}, 
+                  GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                  DefaultBaseStyle -> "Column", 
+                  GridBoxItemSize -> {
+                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}]},
+                "RowDefault"]}
+             },
+             DefaultBaseStyle->"Column",
+             GridBoxAlignment->{"Columns" -> {{Left}}},
+             
+             GridBoxItemSize->{
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+            "Column"],
+           FrameMargins->{{6, 0}, {3, 6}}], "\<\"\"\>"},
+         {
+          PaneBox[GridBox[{
+             {
+              
+              DynamicModuleBox[{System`InformationDump`open$$ = {
+               False, False, False, False, False, False}}, 
+               StyleBox[GridBox[{
+                  {
+                   TagBox[
+                    TooltipBox[
+                    StyleBox["\<\" Full Name\"\>", "InformationRowLabel",
+                    StripOnInput->False],
+                    "\"FullName\"",
+                    TooltipStyle->"TextStyling"],
+                    
+                    Annotation[#, "FullName", 
+                    "Tooltip"]& ], "\<\"CoolQuant`QDot\"\>"}
+                 },
+                 AutoDelete->False,
+                 GridBoxAlignment->{"Columns" -> {Right, Left}},
+                 GridBoxDividers->None,
+                 GridBoxItemSize->{"Columns" -> {Automatic, Automatic}},
+                 GridBoxSpacings->{"Columns" -> {
+                    Offset[0.27999999999999997`], {
+                    Offset[0.5599999999999999]}, 
+                    Offset[0.27999999999999997`]}, "Rows" -> {
+                    Offset[0.2], {
+                    Offset[0.8]}, 
+                    Offset[0.2]}}], "DialogStyle",
+                StripOnInput->False],
+               DynamicModuleValues:>{}]}
+            },
+            DefaultBaseStyle->"Column",
+            GridBoxAlignment->{"Columns" -> {{Left}}},
+            GridBoxDividers->{"Columns" -> {{False}}, "Rows" -> {{False}}},
+            
+            GridBoxItemSize->{
+             "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+            GridBoxSpacings->{"Columns" -> {
+                Offset[0.27999999999999997`], {
+                 Offset[0.5599999999999999]}, 
+                Offset[0.27999999999999997`]}, "Rows" -> {
+                Offset[0.2], {
+                 Offset[3.6]}, 
+                Offset[0.2]}}],
+           FrameMargins->{{6, 6}, {6, 3}}], ""},
+         {
+          ItemBox[
+           TagBox[
+            ButtonBox[
+             PaneSelectorBox[{False->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "UpPointerOpener"]], True->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "UpPointerOpenerHot"]]}, Dynamic[
+              System`InformationDump`mouseOver$$]],
+             Alignment->Left,
+             Appearance->{"Default" -> None},
+             
+             ButtonFunction:>FEPrivate`Set[
+              System`InformationDump`open$$, False],
+             Evaluator->Automatic,
+             FrameMargins->{{9, 0}, {0, 0}},
+             ImageMargins->0,
+             ImageSize->Full,
+             Method->"Preemptive"],
+            
+            EventHandlerTag[{
+             "MouseEntered" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, True], 
+              "MouseExited" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, False], 
+              Method -> "Preemptive", PassEventsDown -> Automatic, 
+              PassEventsUp -> True}]],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], "\[SpanFromLeft]"}
+        },
+        AutoDelete->False,
+        FrameStyle->Directive[
+          GrayLevel[0.8], 
+          Thickness[Tiny]],
+        GridBoxAlignment->{"Columns" -> {Left, Right}, "Rows" -> {{Center}}},
+        GridBoxDividers->{
+         "Columns" -> {{None}}, "Rows" -> {False, {True}, False}},
+        GridBoxItemSize->{
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+       "Grid"], False->
+      TagBox[GridBox[{
+         {
+          ItemBox[
+           PaneBox[
+            StyleBox[
+             TagBox[
+              TooltipBox[
+               StyleBox["\<\" Symbol\"\>", "InformationRowLabel",
+                StripOnInput->False],
+               "\"Symbol\"",
+               TooltipStyle->"TextStyling"],
+              Annotation[#, "Symbol", "Tooltip"]& ], "InformationTitleText",
+             StripOnInput->False],
+            FrameMargins->{{4, 0}, {-1, 1}}],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           PaneBox[
+            
+            StyleBox["\<\"\\!\\(\\*\\n\\tStyleBox[\\\"\[Alpha]\\\", \
+\\\"TR\\\"]\\n\\) \[CenterDot] \\!\\(\\*\\n\\tStyleBox[\\\"\[Beta]\\\", \
+\\\"TR\\\"]\\n\\) \[CenterDot] \\!\\(\\*\\n\\tStyleBox[\\\"\[Gamma]\\\", \
+\\\"TR\\\"]\\n\\) represents a generally noncommutative product of quantum \
+objects.\"\>", "InformationUsageText",
+             StripOnInput->False,
+             LineSpacing->{1.5, 1.5, 3.}],
+            FrameMargins->{{10, 10}, {8, 10}}],
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           TagBox[
+            ButtonBox[
+             PaneSelectorBox[{False->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "DownPointerOpener"],
+               ImageSizeCache->{10., {3., 7.}}], True->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "DownPointerOpenerHot"],
+               ImageSizeCache->{10., {3., 7.}}]}, Dynamic[
+              System`InformationDump`mouseOver$$]],
+             Alignment->Left,
+             Appearance->{"Default" -> None},
+             
+             ButtonFunction:>FEPrivate`Set[
+              System`InformationDump`open$$, True],
+             Evaluator->Automatic,
+             FrameMargins->{{9, 0}, {0, 0}},
+             ImageMargins->0,
+             ImageSize->Full,
+             Method->"Preemptive"],
+            
+            EventHandlerTag[{
+             "MouseEntered" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, True], 
+              "MouseExited" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, False], 
+              Method -> "Preemptive", PassEventsDown -> Automatic, 
+              PassEventsUp -> True}]],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], "\[SpanFromLeft]"}
+        },
+        AutoDelete->False,
+        FrameStyle->Directive[
+          GrayLevel[0.8], 
+          Thickness[Tiny]],
+        GridBoxAlignment->{"Columns" -> {Left, Right}, "Rows" -> {{Center}}},
+        GridBoxDividers->{
+         "Columns" -> {{None}}, "Rows" -> {False, {True}, False}},
+        GridBoxItemSize->{
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+       "Grid"]}, Dynamic[System`InformationDump`open$$],
+      BaselinePosition->Baseline,
+      FrameMargins->0,
+      ImageSize->Automatic],
+     DynamicModuleValues:>{}],
+    BaseStyle->"InformationGridFrame",
+    StripOnInput->False], "InformationGridPlain",
+   StripOnInput->False],
+  InformationData[<|
+   "ObjectType" -> "Symbol", "Usage" -> 
+    "\!\(\*\n\tStyleBox[\"\[Alpha]\", \"TR\"]\n\) \[CenterDot] \!\(\*\n\t\
+StyleBox[\"\[Beta]\", \"TR\"]\n\) \[CenterDot] \!\(\*\n\t\
+StyleBox[\"\[Gamma]\", \"TR\"]\n\) represents a generally noncommutative \
+product of quantum objects.", "Documentation" -> None, "OwnValues" -> 
+    Information`InformationValueForm[
+     OwnValues, CoolQuant`QDot, {CoolQuant`QDot -> CenterDot}], "UpValues" -> 
+    None, "DownValues" -> None, "SubValues" -> None, "DefaultValues" -> None, 
+    "NValues" -> None, "FormatValues" -> None, "Options" -> None, 
+    "Attributes" -> {}, "FullName" -> "CoolQuant`QDot"|>, False]]], "Output",
+ CellChangeTimes->{
+  3.9400846088531857`*^9, 3.940085016828775*^9, 3.940085545137833*^9, 
+   3.940085700028*^9, 3.9400858517432423`*^9, 3.940086120233851*^9, {
+   3.940086246795463*^9, 3.940086283490151*^9}, 3.940086325475793*^9, 
+   3.94008654050746*^9, {3.9400866417569304`*^9, 3.940086665788211*^9}, 
+   3.940087133166939*^9, 3.9400871697952642`*^9, 3.940088294853724*^9, 
+   3.940088709235504*^9, {3.940088886682829*^9, 3.940088889358554*^9}, {
+   3.940089071573111*^9, 3.940089074132287*^9}, 3.940089207847806*^9, 
+   3.940089429733914*^9, {3.940089469651198*^9, 3.940089492629019*^9}, 
+   3.940090015467186*^9, 3.940090791055067*^9, 3.940091021132388*^9, 
+   3.940091153293396*^9},
+ CellLabel->"Out[266]=",
+ CellID->266038101,ExpressionUUID->"1635dc16-4acf-4607-97d2-3d3c68161bc8"],
+
+Cell[BoxData[
+ InterpretationBox[
+  StyleBox[
+   FrameBox[
+    DynamicModuleBox[{System`InformationDump`open$$ = False, 
+     System`InformationDump`mouseOver$$ = False}, 
+     PaneSelectorBox[{True->
+      TagBox[GridBox[{
+         {
+          ItemBox[
+           PaneBox[
+            StyleBox[
+             TagBox[
+              TooltipBox[
+               StyleBox["\<\" Symbol\"\>", "InformationRowLabel",
+                StripOnInput->False],
+               "\"Symbol\"",
+               TooltipStyle->"TextStyling"],
+              Annotation[#, "Symbol", "Tooltip"]& ], "InformationTitleText",
+             StripOnInput->False,
+             BaseStyle -> None],
+            FrameMargins->{{4, 0}, {-1, 1}}],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           PaneBox[
+            
+            StyleBox["\<\"Generally noncommutative application product.\\nFor \
+an operator \\!\\(\\*\\n\\tStyleBox[\\n\\t\\tOverscriptBox[\\\"Q\\\", \\\"^\\\
+\"],\\n\\t\\t\\\"TI\\\"\\n\\t]\\n\\), \
+\\!\\(\\*\\n\\tStyleBox[\\n\\t\\tOverscriptBox[\\\"Q\\\", \
+\\\"^\\\"],\\n\\t\\t\\\"TI\\\"\\n\\t]\\n\\) ** \\!\\(\\*\\n\\tStyleBox[\\\"fx\
+\\\", \\\"TI\\\"]\\n\\) applies \
+\\!\\(\\*\\n\\tStyleBox[\\n\\t\\tOverscriptBox[\\\"Q\\\", \\\"^\\\"], \
+\\n\\t\\t\\\"TI\\\"\\n\\t]\\n\\) to the expression \\!\\(\\*\\n\\tStyleBox[\\\
+\"fx\\\", \\\"TI\\\"]\\n\\) as \
+\\!\\(\\*\\n\\tStyleBox[\\n\\t\\tOverscriptBox[\\\"Q\\\", \\\"^\\\"], \
+\\n\\t\\t\\\"TI\\\"\\n\\t]\\n\\)[\\!\\(\\*\\n\\tStyleBox[\\\"fx\\\", \\\"TI\\\
+\"]\\n\\)].\\nFor a nonoperator quantum object \\!\\(\\*\\n\\tStyleBox[\\\"\
+\[Alpha]\\\", \\\"TR\\\"]\\n\\), \\!\\(\\*\\n\\tStyleBox[\\\"\[Alpha]\\\", \\\
+\"TR\\\"]\\n\\) ** \\!\\(\\*\\n\\tStyleBox[\\\"fx\\\", \\\"TI\\\"]\\n\\) \
+becomes \\!\\(\\*\\n\\tStyleBox[\\\"\[Alpha]\\\", \\\"TR\\\"]\\n\\) \
+\[CenterDot] \\!\\(\\*\\n\\tStyleBox[\\\"fx\\\", \
+\\\"TI\\\"]\\n\\).\\nOtherwise, the operation defaults to usual \
+multiplication.\"\>", "InformationUsageText",
+             StripOnInput->False,
+             LineSpacing->{1.5, 1.5, 3.}],
+            FrameMargins->{{10, 10}, {8, 10}}],
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False]},
+         {
+          PaneBox[
+           TagBox[GridBox[{
+              {
+               StyleBox[
+                TagBox[
+                 TooltipBox[
+                  StyleBox["\<\" Assignment\"\>", "InformationRowLabel",
+                   StripOnInput->False],
+                  "\"OwnValues\"",
+                  TooltipStyle->"TextStyling"],
+                 Annotation[#, "OwnValues", "Tooltip"]& ], "DialogStyle",
+                StripOnInput->False]},
+              {
+               TemplateBox[{"\"\[ThinSpace]\"", 
+                 GridBox[{{
+                    RowBox[{"QMult", "=", "NonCommutativeMultiply"}]}, {" "}},
+                   GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                  DefaultBaseStyle -> "Column", 
+                  GridBoxItemSize -> {
+                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}]},
+                "RowDefault"]}
+             },
+             DefaultBaseStyle->"Column",
+             GridBoxAlignment->{"Columns" -> {{Left}}},
+             
+             GridBoxItemSize->{
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+            "Column"],
+           FrameMargins->{{6, 0}, {3, 6}}], "\<\"\"\>"},
+         {
+          PaneBox[GridBox[{
+             {
+              
+              DynamicModuleBox[{System`InformationDump`open$$ = {
+               False, False, False, False, False, False}}, 
+               StyleBox[GridBox[{
+                  {
+                   TagBox[
+                    TooltipBox[
+                    StyleBox["\<\" Full Name\"\>", "InformationRowLabel",
+                    StripOnInput->False],
+                    "\"FullName\"",
+                    TooltipStyle->"TextStyling"],
+                    
+                    Annotation[#, "FullName", 
+                    "Tooltip"]& ], "\<\"CoolQuant`QMult\"\>"}
+                 },
+                 AutoDelete->False,
+                 GridBoxAlignment->{"Columns" -> {Right, Left}},
+                 GridBoxDividers->None,
+                 GridBoxItemSize->{"Columns" -> {Automatic, Automatic}},
+                 GridBoxSpacings->{"Columns" -> {
+                    Offset[0.27999999999999997`], {
+                    Offset[0.5599999999999999]}, 
+                    Offset[0.27999999999999997`]}, "Rows" -> {
+                    Offset[0.2], {
+                    Offset[0.8]}, 
+                    Offset[0.2]}}], "DialogStyle",
+                StripOnInput->False],
+               DynamicModuleValues:>{}]}
+            },
+            DefaultBaseStyle->"Column",
+            GridBoxAlignment->{"Columns" -> {{Left}}},
+            GridBoxDividers->{"Columns" -> {{False}}, "Rows" -> {{False}}},
+            
+            GridBoxItemSize->{
+             "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+            GridBoxSpacings->{"Columns" -> {
+                Offset[0.27999999999999997`], {
+                 Offset[0.5599999999999999]}, 
+                Offset[0.27999999999999997`]}, "Rows" -> {
+                Offset[0.2], {
+                 Offset[3.6]}, 
+                Offset[0.2]}}],
+           FrameMargins->{{6, 6}, {6, 3}}], ""},
+         {
+          ItemBox[
+           TagBox[
+            ButtonBox[
+             PaneSelectorBox[{False->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "UpPointerOpener"]], True->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "UpPointerOpenerHot"]]}, Dynamic[
+              System`InformationDump`mouseOver$$]],
+             Alignment->Left,
+             Appearance->{"Default" -> None},
+             
+             ButtonFunction:>FEPrivate`Set[
+              System`InformationDump`open$$, False],
+             Evaluator->Automatic,
+             FrameMargins->{{9, 0}, {0, 0}},
+             ImageMargins->0,
+             ImageSize->Full,
+             Method->"Preemptive"],
+            
+            EventHandlerTag[{
+             "MouseEntered" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, True], 
+              "MouseExited" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, False], 
+              Method -> "Preemptive", PassEventsDown -> Automatic, 
+              PassEventsUp -> True}]],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], "\[SpanFromLeft]"}
+        },
+        AutoDelete->False,
+        FrameStyle->Directive[
+          GrayLevel[0.8], 
+          Thickness[Tiny]],
+        GridBoxAlignment->{"Columns" -> {Left, Right}, "Rows" -> {{Center}}},
+        GridBoxDividers->{
+         "Columns" -> {{None}}, "Rows" -> {False, {True}, False}},
+        GridBoxItemSize->{
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+       "Grid"], False->
+      TagBox[GridBox[{
+         {
+          ItemBox[
+           PaneBox[
+            StyleBox[
+             TagBox[
+              TooltipBox[
+               StyleBox["\<\" Symbol\"\>", "InformationRowLabel",
+                StripOnInput->False],
+               "\"Symbol\"",
+               TooltipStyle->"TextStyling"],
+              Annotation[#, "Symbol", "Tooltip"]& ], "InformationTitleText",
+             StripOnInput->False],
+            FrameMargins->{{4, 0}, {-1, 1}}],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           PaneBox[
+            
+            StyleBox["\<\"Generally noncommutative application product.\\nFor \
+an operator \\!\\(\\*\\n\\tStyleBox[\\n\\t\\tOverscriptBox[\\\"Q\\\", \\\"^\\\
+\"],\\n\\t\\t\\\"TI\\\"\\n\\t]\\n\\), \
+\\!\\(\\*\\n\\tStyleBox[\\n\\t\\tOverscriptBox[\\\"Q\\\", \
+\\\"^\\\"],\\n\\t\\t\\\"TI\\\"\\n\\t]\\n\\) ** \\!\\(\\*\\n\\tStyleBox[\\\"fx\
+\\\", \\\"TI\\\"]\\n\\) applies \
+\\!\\(\\*\\n\\tStyleBox[\\n\\t\\tOverscriptBox[\\\"Q\\\", \\\"^\\\"], \
+\\n\\t\\t\\\"TI\\\"\\n\\t]\\n\\) to the expression \\!\\(\\*\\n\\tStyleBox[\\\
+\"fx\\\", \\\"TI\\\"]\\n\\) as \
+\\!\\(\\*\\n\\tStyleBox[\\n\\t\\tOverscriptBox[\\\"Q\\\", \\\"^\\\"], \
+\\n\\t\\t\\\"TI\\\"\\n\\t]\\n\\)[\\!\\(\\*\\n\\tStyleBox[\\\"fx\\\", \\\"TI\\\
+\"]\\n\\)].\\nFor a nonoperator quantum object \\!\\(\\*\\n\\tStyleBox[\\\"\
+\[Alpha]\\\", \\\"TR\\\"]\\n\\), \\!\\(\\*\\n\\tStyleBox[\\\"\[Alpha]\\\", \\\
+\"TR\\\"]\\n\\) ** \\!\\(\\*\\n\\tStyleBox[\\\"fx\\\", \\\"TI\\\"]\\n\\) \
+becomes \\!\\(\\*\\n\\tStyleBox[\\\"\[Alpha]\\\", \\\"TR\\\"]\\n\\) \
+\[CenterDot] \\!\\(\\*\\n\\tStyleBox[\\\"fx\\\", \
+\\\"TI\\\"]\\n\\).\\nOtherwise, the operation defaults to usual \
+multiplication.\"\>", "InformationUsageText",
+             StripOnInput->False,
+             LineSpacing->{1.5, 1.5, 3.}],
+            FrameMargins->{{10, 10}, {8, 10}}],
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           TagBox[
+            ButtonBox[
+             PaneSelectorBox[{False->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "DownPointerOpener"],
+               ImageSizeCache->{10., {3., 7.}}], True->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "DownPointerOpenerHot"],
+               ImageSizeCache->{10., {3., 7.}}]}, Dynamic[
+              System`InformationDump`mouseOver$$]],
+             Alignment->Left,
+             Appearance->{"Default" -> None},
+             
+             ButtonFunction:>FEPrivate`Set[
+              System`InformationDump`open$$, True],
+             Evaluator->Automatic,
+             FrameMargins->{{9, 0}, {0, 0}},
+             ImageMargins->0,
+             ImageSize->Full,
+             Method->"Preemptive"],
+            
+            EventHandlerTag[{
+             "MouseEntered" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, True], 
+              "MouseExited" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, False], 
+              Method -> "Preemptive", PassEventsDown -> Automatic, 
+              PassEventsUp -> True}]],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], "\[SpanFromLeft]"}
+        },
+        AutoDelete->False,
+        FrameStyle->Directive[
+          GrayLevel[0.8], 
+          Thickness[Tiny]],
+        GridBoxAlignment->{"Columns" -> {Left, Right}, "Rows" -> {{Center}}},
+        GridBoxDividers->{
+         "Columns" -> {{None}}, "Rows" -> {False, {True}, False}},
+        GridBoxItemSize->{
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+       "Grid"]}, Dynamic[System`InformationDump`open$$],
+      BaselinePosition->Baseline,
+      FrameMargins->0,
+      ImageSize->Automatic],
+     DynamicModuleValues:>{}],
+    BaseStyle->"InformationGridFrame",
+    StripOnInput->False], "InformationGridPlain",
+   StripOnInput->False],
+  InformationData[<|
+   "ObjectType" -> "Symbol", "Usage" -> 
+    "Generally noncommutative application product.\nFor an operator \!\(\*\n\t\
+StyleBox[\n\t\tOverscriptBox[\"Q\", \"^\"],\n\t\t\"TI\"\n\t]\n\), \!\(\*\n\t\
+StyleBox[\n\t\tOverscriptBox[\"Q\", \"^\"],\n\t\t\"TI\"\n\t]\n\) ** \!\(\*\n\t\
+StyleBox[\"fx\", \"TI\"]\n\) applies \!\(\*\n\tStyleBox[\n\t\t\
+OverscriptBox[\"Q\", \"^\"], \n\t\t\"TI\"\n\t]\n\) to the expression \!\(\*\n\
+\tStyleBox[\"fx\", \"TI\"]\n\) as \!\(\*\n\tStyleBox[\n\t\t\
+OverscriptBox[\"Q\", \"^\"], \n\t\t\"TI\"\n\t]\n\)[\!\(\*\n\tStyleBox[\"fx\", \
+\"TI\"]\n\)].\nFor a nonoperator quantum object \!\(\*\n\tStyleBox[\"\[Alpha]\
+\", \"TR\"]\n\), \!\(\*\n\tStyleBox[\"\[Alpha]\", \"TR\"]\n\) ** \!\(\*\n\t\
+StyleBox[\"fx\", \"TI\"]\n\) becomes \!\(\*\n\tStyleBox[\"\[Alpha]\", \"TR\"]\
+\n\) \[CenterDot] \!\(\*\n\tStyleBox[\"fx\", \"TI\"]\n\).\nOtherwise, the \
+operation defaults to usual multiplication.", "Documentation" -> None, 
+    "OwnValues" -> 
+    Information`InformationValueForm[
+     OwnValues, CoolQuant`QMult, {CoolQuant`QMult -> NonCommutativeMultiply}],
+     "UpValues" -> None, "DownValues" -> None, "SubValues" -> None, 
+    "DefaultValues" -> None, "NValues" -> None, "FormatValues" -> None, 
+    "Options" -> None, "Attributes" -> {}, "FullName" -> "CoolQuant`QMult"|>, 
+   False]]], "Output",
+ CellChangeTimes->{
+  3.9400846088531857`*^9, 3.940085016828775*^9, 3.940085545137833*^9, 
+   3.940085700028*^9, 3.9400858517432423`*^9, 3.940086120233851*^9, {
+   3.940086246795463*^9, 3.940086283490151*^9}, 3.940086325475793*^9, 
+   3.94008654050746*^9, {3.9400866417569304`*^9, 3.940086665788211*^9}, 
+   3.940087133166939*^9, 3.9400871697952642`*^9, 3.940088294853724*^9, 
+   3.940088709235504*^9, {3.940088886682829*^9, 3.940088889358554*^9}, {
+   3.940089071573111*^9, 3.940089074132287*^9}, 3.940089207847806*^9, 
+   3.940089429733914*^9, {3.940089469651198*^9, 3.940089492629019*^9}, 
+   3.940090015467186*^9, 3.940090791055067*^9, 3.940091021132388*^9, 
+   3.940091153369895*^9},
+ CellLabel->"Out[267]=",
+ CellID->2042922420,ExpressionUUID->"54079517-0f22-4c86-8943-594de12da3c0"],
+
+Cell[BoxData[
+ InterpretationBox[
+  StyleBox[
+   FrameBox[
+    DynamicModuleBox[{System`InformationDump`open$$ = False, 
+     System`InformationDump`mouseOver$$ = False}, 
+     PaneSelectorBox[{True->
+      TagBox[GridBox[{
+         {
+          ItemBox[
+           PaneBox[
+            StyleBox[
+             TagBox[
+              TooltipBox[
+               StyleBox["\<\" Symbol\"\>", "InformationRowLabel",
+                StripOnInput->False],
+               "\"Symbol\"",
+               TooltipStyle->"TextStyling"],
+              Annotation[#, "Symbol", "Tooltip"]& ], "InformationTitleText",
+             StripOnInput->False,
+             BaseStyle -> None],
+            FrameMargins->{{4, 0}, {-1, 1}}],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           PaneBox[
+            
+            StyleBox["\<\"Commutator[\\!\\(\\*\\n\\tStyleBox[\\\"g\\\", \
+\\\"TI\\\"]\\n\\), \\!\\(\\*\\n\\tStyleBox[\\\"h\\\", \\\"TI\\\"]\\n\\)] \
+evaluates the ring element commutator \\!\\(\\*\\n\\tStyleBox[\\\"g\\\", \
+\\\"TI\\\"]\\n\\) \[CenterDot] \\!\\(\\*\\n\\tStyleBox[\\\"h\\\", \\\"TI\\\"]\
+\\n\\) - \\!\\(\\*\\n\\tStyleBox[\\\"h\\\", \\\"TI\\\"]\\n\\) \[CenterDot] \
+\\!\\(\\*\\n\\tStyleBox[\\\"g\\\", \
+\\\"TI\\\"]\\n\\).\\nCommutator[\\!\\(\\*\\n\\tStyleBox[\\\"g\\\", \
+\\\"TI\\\"]\\n\\), \\!\\(\\*\\n\\tStyleBox[\\\"h\\\", \\\"TI\\\"]\\n\\), \
+\\!\\(\\*\\n\\tStyleBox[\\\"fx\\\", \\\"TI\\\"]\\n\\)] applies the test \
+expression \\!\\(\\*\\n\\tStyleBox[\\\"fx\\\", \\\"TI\\\"]\\n\\) and divides \
+it out.\"\>", "InformationUsageText",
+             StripOnInput->False,
+             LineSpacing->{1.5, 1.5, 3.}],
+            FrameMargins->{{10, 10}, {8, 10}}],
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False]},
+         {
+          PaneBox[
+           TagBox[GridBox[{
+              {
+               StyleBox[
+                TagBox[
+                 TooltipBox[
+                  StyleBox["\<\" Definitions\"\>", "InformationRowLabel",
+                   StripOnInput->False],
+                  "\"Definitions\"",
+                  TooltipStyle->"TextStyling"],
+                 Annotation[#, "Definitions", "Tooltip"]& ], "DialogStyle",
+                StripOnInput->False]},
+              {
+               TemplateBox[{"\"\[ThinSpace]\"", 
+                 GridBox[{{
+                    RowBox[{
+                    RowBox[{"Commutator", "[", 
+                    RowBox[{"g_", ",", "h_"}], "]"}], ":=", 
+                    RowBox[{
+                    RowBox[{"QDot", "[", 
+                    RowBox[{"g", ",", "h"}], "]"}], "-", 
+                    RowBox[{"QDot", "[", 
+                    RowBox[{"h", ",", "g"}], "]"}]}]}]}, {" "}, {
+                    RowBox[{
+                    RowBox[{"Commutator", "[", 
+                    RowBox[{"g_", ",", "h_", ",", "fx_"}], "]"}], ":=", 
+                    RowBox[{"Simplify", "[", 
+                    FractionBox[
+                    RowBox[{"QMult", "[", 
+                    RowBox[{
+                    RowBox[{"Commutator", "[", 
+                    RowBox[{"g", ",", "h"}], "]"}], ",", "fx"}], "]"}], "fx"],
+                     "]"}]}]}, {" "}}, 
+                  GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                  DefaultBaseStyle -> "Column", 
+                  GridBoxItemSize -> {
+                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}]},
+                "RowDefault"]}
+             },
+             DefaultBaseStyle->"Column",
+             GridBoxAlignment->{"Columns" -> {{Left}}},
+             
+             GridBoxItemSize->{
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+            "Column"],
+           FrameMargins->{{6, 0}, {3, 6}}], "\<\"\"\>"},
+         {
+          PaneBox[GridBox[{
+             {
+              
+              DynamicModuleBox[{System`InformationDump`open$$ = {
+               False, False, False, False, False, False}}, 
+               StyleBox[GridBox[{
+                  {
+                   TagBox[
+                    TooltipBox[
+                    StyleBox["\<\" Full Name\"\>", "InformationRowLabel",
+                    StripOnInput->False],
+                    "\"FullName\"",
+                    TooltipStyle->"TextStyling"],
+                    
+                    Annotation[#, "FullName", 
+                    "Tooltip"]& ], "\<\"CoolQuant`Commutator\"\>"}
+                 },
+                 AutoDelete->False,
+                 GridBoxAlignment->{"Columns" -> {Right, Left}},
+                 GridBoxDividers->None,
+                 GridBoxItemSize->{"Columns" -> {Automatic, Automatic}},
+                 GridBoxSpacings->{"Columns" -> {
+                    Offset[0.27999999999999997`], {
+                    Offset[0.5599999999999999]}, 
+                    Offset[0.27999999999999997`]}, "Rows" -> {
+                    Offset[0.2], {
+                    Offset[0.8]}, 
+                    Offset[0.2]}}], "DialogStyle",
+                StripOnInput->False],
+               DynamicModuleValues:>{}]}
+            },
+            DefaultBaseStyle->"Column",
+            GridBoxAlignment->{"Columns" -> {{Left}}},
+            GridBoxDividers->{"Columns" -> {{False}}, "Rows" -> {{False}}},
+            
+            GridBoxItemSize->{
+             "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+            GridBoxSpacings->{"Columns" -> {
+                Offset[0.27999999999999997`], {
+                 Offset[0.5599999999999999]}, 
+                Offset[0.27999999999999997`]}, "Rows" -> {
+                Offset[0.2], {
+                 Offset[3.6]}, 
+                Offset[0.2]}}],
+           FrameMargins->{{6, 6}, {6, 3}}], ""},
+         {
+          ItemBox[
+           TagBox[
+            ButtonBox[
+             PaneSelectorBox[{False->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "UpPointerOpener"]], True->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "UpPointerOpenerHot"]]}, Dynamic[
+              System`InformationDump`mouseOver$$]],
+             Alignment->Left,
+             Appearance->{"Default" -> None},
+             
+             ButtonFunction:>FEPrivate`Set[
+              System`InformationDump`open$$, False],
+             Evaluator->Automatic,
+             FrameMargins->{{9, 0}, {0, 0}},
+             ImageMargins->0,
+             ImageSize->Full,
+             Method->"Preemptive"],
+            
+            EventHandlerTag[{
+             "MouseEntered" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, True], 
+              "MouseExited" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, False], 
+              Method -> "Preemptive", PassEventsDown -> Automatic, 
+              PassEventsUp -> True}]],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], "\[SpanFromLeft]"}
+        },
+        AutoDelete->False,
+        FrameStyle->Directive[
+          GrayLevel[0.8], 
+          Thickness[Tiny]],
+        GridBoxAlignment->{"Columns" -> {Left, Right}, "Rows" -> {{Center}}},
+        GridBoxDividers->{
+         "Columns" -> {{None}}, "Rows" -> {False, {True}, False}},
+        GridBoxItemSize->{
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+       "Grid"], False->
+      TagBox[GridBox[{
+         {
+          ItemBox[
+           PaneBox[
+            StyleBox[
+             TagBox[
+              TooltipBox[
+               StyleBox["\<\" Symbol\"\>", "InformationRowLabel",
+                StripOnInput->False],
+               "\"Symbol\"",
+               TooltipStyle->"TextStyling"],
+              Annotation[#, "Symbol", "Tooltip"]& ], "InformationTitleText",
+             StripOnInput->False],
+            FrameMargins->{{4, 0}, {-1, 1}}],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           PaneBox[
+            
+            StyleBox["\<\"Commutator[\\!\\(\\*\\n\\tStyleBox[\\\"g\\\", \
+\\\"TI\\\"]\\n\\), \\!\\(\\*\\n\\tStyleBox[\\\"h\\\", \\\"TI\\\"]\\n\\)] \
+evaluates the ring element commutator \\!\\(\\*\\n\\tStyleBox[\\\"g\\\", \
+\\\"TI\\\"]\\n\\) \[CenterDot] \\!\\(\\*\\n\\tStyleBox[\\\"h\\\", \\\"TI\\\"]\
+\\n\\) - \\!\\(\\*\\n\\tStyleBox[\\\"h\\\", \\\"TI\\\"]\\n\\) \[CenterDot] \
+\\!\\(\\*\\n\\tStyleBox[\\\"g\\\", \
+\\\"TI\\\"]\\n\\).\\nCommutator[\\!\\(\\*\\n\\tStyleBox[\\\"g\\\", \
+\\\"TI\\\"]\\n\\), \\!\\(\\*\\n\\tStyleBox[\\\"h\\\", \\\"TI\\\"]\\n\\), \
+\\!\\(\\*\\n\\tStyleBox[\\\"fx\\\", \\\"TI\\\"]\\n\\)] applies the test \
+expression \\!\\(\\*\\n\\tStyleBox[\\\"fx\\\", \\\"TI\\\"]\\n\\) and divides \
+it out.\"\>", "InformationUsageText",
+             StripOnInput->False,
+             LineSpacing->{1.5, 1.5, 3.}],
+            FrameMargins->{{10, 10}, {8, 10}}],
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           TagBox[
+            ButtonBox[
+             PaneSelectorBox[{False->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "DownPointerOpener"],
+               ImageSizeCache->{10., {3., 7.}}], True->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "DownPointerOpenerHot"],
+               ImageSizeCache->{10., {3., 7.}}]}, Dynamic[
+              System`InformationDump`mouseOver$$]],
+             Alignment->Left,
+             Appearance->{"Default" -> None},
+             
+             ButtonFunction:>FEPrivate`Set[
+              System`InformationDump`open$$, True],
+             Evaluator->Automatic,
+             FrameMargins->{{9, 0}, {0, 0}},
+             ImageMargins->0,
+             ImageSize->Full,
+             Method->"Preemptive"],
+            
+            EventHandlerTag[{
+             "MouseEntered" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, True], 
+              "MouseExited" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, False], 
+              Method -> "Preemptive", PassEventsDown -> Automatic, 
+              PassEventsUp -> True}]],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], "\[SpanFromLeft]"}
+        },
+        AutoDelete->False,
+        FrameStyle->Directive[
+          GrayLevel[0.8], 
+          Thickness[Tiny]],
+        GridBoxAlignment->{"Columns" -> {Left, Right}, "Rows" -> {{Center}}},
+        GridBoxDividers->{
+         "Columns" -> {{None}}, "Rows" -> {False, {True}, False}},
+        GridBoxItemSize->{
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+       "Grid"]}, Dynamic[System`InformationDump`open$$],
+      BaselinePosition->Baseline,
+      FrameMargins->0,
+      ImageSize->Automatic],
+     DynamicModuleValues:>{}],
+    BaseStyle->"InformationGridFrame",
+    StripOnInput->False], "InformationGridPlain",
+   StripOnInput->False],
+  InformationData[<|
+   "ObjectType" -> "Symbol", "Usage" -> 
+    "Commutator[\!\(\*\n\tStyleBox[\"g\", \"TI\"]\n\), \!\(\*\n\tStyleBox[\"h\
+\", \"TI\"]\n\)] evaluates the ring element commutator \!\(\*\n\tStyleBox[\"g\
+\", \"TI\"]\n\) \[CenterDot] \!\(\*\n\tStyleBox[\"h\", \"TI\"]\n\) - \!\(\*\n\
+\tStyleBox[\"h\", \"TI\"]\n\) \[CenterDot] \!\(\*\n\tStyleBox[\"g\", \"TI\"]\n\
+\).\nCommutator[\!\(\*\n\tStyleBox[\"g\", \"TI\"]\n\), \!\(\*\n\tStyleBox[\"h\
+\", \"TI\"]\n\), \!\(\*\n\tStyleBox[\"fx\", \"TI\"]\n\)] applies the test \
+expression \!\(\*\n\tStyleBox[\"fx\", \"TI\"]\n\) and divides it out.", 
+    "Documentation" -> None, "OwnValues" -> None, "UpValues" -> None, 
+    "DownValues" -> 
+    Information`InformationValueForm[
+     DownValues, CoolQuant`Commutator, {CoolQuant`Commutator[
+         Pattern[CoolQuant`g, 
+          Blank[]], 
+         Pattern[CoolQuant`h, 
+          Blank[]]] :> 
+       CoolQuant`QDot[CoolQuant`g, CoolQuant`h] - CoolQuant`QDot[
+        CoolQuant`h, CoolQuant`g], CoolQuant`Commutator[
+         Pattern[CoolQuant`g, 
+          Blank[]], 
+         Pattern[CoolQuant`h, 
+          Blank[]], 
+         Pattern[CoolQuant`fx, 
+          Blank[]]] :> Simplify[CoolQuant`QMult[
+           CoolQuant`Commutator[CoolQuant`g, CoolQuant`h], CoolQuant`fx]/
+         CoolQuant`fx]}], "SubValues" -> None, "DefaultValues" -> None, 
+    "NValues" -> None, "FormatValues" -> None, "Options" -> None, 
+    "Attributes" -> {}, "FullName" -> "CoolQuant`Commutator"|>, 
+   False]]], "Output",
+ CellChangeTimes->{
+  3.9400846088531857`*^9, 3.940085016828775*^9, 3.940085545137833*^9, 
+   3.940085700028*^9, 3.9400858517432423`*^9, 3.940086120233851*^9, {
+   3.940086246795463*^9, 3.940086283490151*^9}, 3.940086325475793*^9, 
+   3.94008654050746*^9, {3.9400866417569304`*^9, 3.940086665788211*^9}, 
+   3.940087133166939*^9, 3.9400871697952642`*^9, 3.940088294853724*^9, 
+   3.940088709235504*^9, {3.940088886682829*^9, 3.940088889358554*^9}, {
+   3.940089071573111*^9, 3.940089074132287*^9}, 3.940089207847806*^9, 
+   3.940089429733914*^9, {3.940089469651198*^9, 3.940089492629019*^9}, 
+   3.940090015467186*^9, 3.940090791055067*^9, 3.940091021132388*^9, 
+   3.940091153446026*^9},
+ CellLabel->"Out[268]=",
+ CellID->1025208523,ExpressionUUID->"a3c78010-4021-4866-a709-61732000c8af"],
+
+Cell[BoxData[
+ InterpretationBox[
+  StyleBox[
+   FrameBox[
+    DynamicModuleBox[{System`InformationDump`open$$ = False, 
+     System`InformationDump`mouseOver$$ = False}, 
+     PaneSelectorBox[{True->
+      TagBox[GridBox[{
+         {
+          ItemBox[
+           PaneBox[
+            StyleBox[
+             TagBox[
+              TooltipBox[
+               StyleBox["\<\" Symbol\"\>", "InformationRowLabel",
+                StripOnInput->False],
+               "\"Symbol\"",
+               TooltipStyle->"TextStyling"],
+              Annotation[#, "Symbol", "Tooltip"]& ], "InformationTitleText",
+             StripOnInput->False,
+             BaseStyle -> None],
+            FrameMargins->{{4, 0}, {-1, 1}}],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           PaneBox[
+            
+            StyleBox["\<\"QEval[\\!\\(\\*\\n\\tTemplateBox[\\n\\t\\t{\\n\\t\\\
+t\\tStyleBox[\\\"g\\\", \\\"TI\\\"], \\n\\t\\t\\tStyleBox[\\\"f\\\", \\\"TI\\\
+\"]\\n\\t\\t},\\n\\t\\t\\\"BraKet\\\"\\n\\t]\\n\\)] evaluates the bra-ket \\!\
+\\(\\*\\n\\tTemplateBox[\\n\\t\\t{\\n\\t\\t\\tStyleBox[\\\"g\\\", \
+\\\"TI\\\"], \\n\\t\\t\\tStyleBox[\\\"f\\\", \
+\\\"TI\\\"]\\n\\t\\t},\\n\\t\\t\\\"BraKet\\\"\\n\\t]\\n\\).\\nQEval[\\!\\(\\*\
+\\n\\tStyleBox[\\\"f\\\", \
+\\\"TI\\\"]\\n\\)[\\!\\(\\*\\n\\tSubscriptBox[\\n\\t\\tStyleBox[\\\"expr\\\", \
+\\\"TI\\\"], \\n\\t\\t\\(1\\)\\n\\t]\\n\\), \
+\\!\\(\\*\\n\\tSubscriptBox[\\n\\t\\tStyleBox[\\\"expr\\\", \\\"TI\\\"], \
+\\n\\t\\t\\(2\\)\\n\\t]\\n\\), ...]] evaluates each inner expression \
+recursively, i.e. \\!\\(\\*\\n\\tStyleBox[\\\"f\\\", \\\"TI\\\"]\\n\\)[QEval[\
+\\!\\(\\*\\n\\tSubscriptBox[\\n\\t\\tStyleBox[\\\"expr\\\", \\\"TI\\\"], \
+\\n\\t\\t\\(1\\)\\n\\t]\\n\\)], \
+QEval[\\!\\(\\*\\n\\tSubscriptBox[\\n\\t\\tStyleBox[\\\"expr\\\", \
+\\\"TI\\\"], \\n\\t\\t\\(2\\)\\n\\t]\\n\\)], ...].\"\>", 
+             "InformationUsageText",
+             StripOnInput->False,
+             LineSpacing->{1.5, 1.5, 3.}],
+            FrameMargins->{{10, 10}, {8, 10}}],
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False]},
+         {
+          PaneBox[
+           TagBox[GridBox[{
+              {
+               StyleBox[
+                TagBox[
+                 TooltipBox[
+                  StyleBox["\<\" Definitions\"\>", "InformationRowLabel",
+                   StripOnInput->False],
+                  "\"Definitions\"",
+                  TooltipStyle->"TextStyling"],
+                 Annotation[#, "Definitions", "Tooltip"]& ], "DialogStyle",
+                StripOnInput->False]},
+              {
+               TemplateBox[{"\"\[ThinSpace]\"", 
+                 GridBox[{{
+                    RowBox[{
+                    RowBox[{"QEval", "[", 
+                    RowBox[{"Q_", "?", "OperatorQ"}], "]"}], ":=", 
+                    RowBox[{"QMult", "[", 
+                    RowBox[{"Q", ",", "1"}], "]"}]}]}, {" "}, {
+                    RowBox[{
+                    RowBox[{"QEval", "[", 
+                    TemplateBox[{
+                    RowBox[{"\[Xi]1_", "?", 
+                    RowBox[{"(", 
+                    RowBox[{"QBasis", "[", "x", "]"}], ")"}]}], 
+                    RowBox[{"\[Xi]2_", "?", 
+                    RowBox[{"(", 
+                    RowBox[{"QBasis", "[", "x", "]"}], ")"}]}]}, "BraKet"], 
+                    "]"}], ":=", 
+                    RowBox[{"DiracDelta", "[", 
+                    RowBox[{"\[Xi]1", "-", "\[Xi]2"}], "]"}]}]}, {" "}, {
+                    RowBox[{
+                    RowBox[{"QEval", "[", 
+                    TemplateBox[{
+                    RowBox[{"\[Mu]1_", "?", 
+                    RowBox[{"(", 
+                    RowBox[{"QBasis", "[", "p", "]"}], ")"}]}], 
+                    RowBox[{"\[Mu]2_", "?", 
+                    RowBox[{"(", 
+                    RowBox[{"QBasis", "[", "p", "]"}], ")"}]}]}, "BraKet"], 
+                    "]"}], ":=", 
+                    RowBox[{"DiracDelta", "[", 
+                    RowBox[{"\[Mu]1", "-", "\[Mu]2"}], "]"}]}]}, {" "}, {
+                    RowBox[{
+                    RowBox[{"QEval", "[", 
+                    TemplateBox[{
+                    RowBox[{"\[Xi]_", "?", 
+                    RowBox[{"(", 
+                    RowBox[{"QBasis", "[", "x", "]"}], ")"}]}], 
+                    RowBox[{"\[Mu]_", "?", 
+                    RowBox[{"(", 
+                    RowBox[{"QBasis", "[", "p", "]"}], ")"}]}]}, "BraKet"], 
+                    "]"}], ":=", 
+                    FractionBox[
+                    SuperscriptBox["\[ExponentialE]", 
+                    FractionBox[
+                    RowBox[{"\[ImaginaryI]", " ", "\[Xi]", " ", "\[Mu]"}], 
+                    "\[HBar]"]], 
+                    SqrtBox[
+                    RowBox[{"2", " ", "\[Pi]", " ", "\[HBar]"}]]]}]}, {" "}, {
+                   
+                    RowBox[{
+                    RowBox[{"QEval", "[", 
+                    TemplateBox[{"g_", 
+                    RowBox[{"e_", "?", 
+                    RowBox[{"(", 
+                    RowBox[{"QBasis", "[", 
+                    RowBox[{"x", ",", "p"}], "]"}], ")"}]}]}, "BraKet"], 
+                    "]"}], ":=", 
+                    RowBox[{"Simplify", "[", 
+                    RowBox[{"Conjugate", "[", 
+                    RowBox[{"QEval", "[", 
+                    TemplateBox[{"e", "g"}, "BraKet"], "]"}], "]"}], 
+                    "]"}]}]}, {" "}, {
+                    RowBox[{
+                    RowBox[{"QEval", "[", 
+                    TemplateBox[{
+                    RowBox[{"\[Xi]_", "?", 
+                    RowBox[{"(", 
+                    RowBox[{"QBasis", "[", "x", "]"}], ")"}]}], "f_"}, 
+                    "BraKet"], "]"}], ":=", 
+                    RowBox[{"f", "[", "\[Xi]", "]"}]}]}, {" "}, {
+                    RowBox[{
+                    RowBox[{"QEval", "[", 
+                    TemplateBox[{
+                    RowBox[{"\[Mu]_", "?", 
+                    RowBox[{"(", 
+                    RowBox[{"QBasis", "[", "p", "]"}], ")"}]}], "f_"}, 
+                    "BraKet"], "]"}], ":=", 
+                    RowBox[{
+                    OverscriptBox["f", "~"], "[", "\[Mu]", "]"}]}]}, {" "}, {
+                    RowBox[{
+                    RowBox[{"QEval", "[", 
+                    TemplateBox[{"g_", "f_"}, "BraKet"], "]"}], ":=", 
+                    RowBox[{"QInner", "[", 
+                    RowBox[{"g", ",", "f"}], "]"}]}]}, {" "}, {
+                    RowBox[{
+                    RowBox[{"QEval", "[", 
+                    RowBox[{"f_", "[", "args__", "]"}], "]"}], ":=", 
+                    RowBox[{
+                    RowBox[{"f", "@@", 
+                    RowBox[{"QEval", "/@", 
+                    RowBox[{"{", "args", "}"}]}]}], "/;", 
+                    RowBox[{"!", 
+                    RowBox[{"QHeadQ", "[", 
+                    RowBox[{"f", "[", "args", "]"}], "]"}]}]}]}]}, {" "}, {
+                    RowBox[{
+                    RowBox[{"QEval", "[", "\[Alpha]_", "]"}], ":=", 
+                    "\[Alpha]"}]}, {" "}}, 
+                  GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                  DefaultBaseStyle -> "Column", 
+                  GridBoxItemSize -> {
+                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}]},
+                "RowDefault"]}
+             },
+             DefaultBaseStyle->"Column",
+             GridBoxAlignment->{"Columns" -> {{Left}}},
+             
+             GridBoxItemSize->{
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+            "Column"],
+           FrameMargins->{{6, 0}, {3, 6}}], "\<\"\"\>"},
+         {
+          PaneBox[GridBox[{
+             {
+              
+              DynamicModuleBox[{System`InformationDump`open$$ = {
+               False, False, False, False, False, False}}, 
+               StyleBox[GridBox[{
+                  {
+                   TagBox[
+                    TooltipBox[
+                    StyleBox["\<\" Full Name\"\>", "InformationRowLabel",
+                    StripOnInput->False],
+                    "\"FullName\"",
+                    TooltipStyle->"TextStyling"],
+                    
+                    Annotation[#, "FullName", 
+                    "Tooltip"]& ], "\<\"CoolQuant`QEval\"\>"}
+                 },
+                 AutoDelete->False,
+                 GridBoxAlignment->{"Columns" -> {Right, Left}},
+                 GridBoxDividers->None,
+                 GridBoxItemSize->{"Columns" -> {Automatic, Automatic}},
+                 GridBoxSpacings->{"Columns" -> {
+                    Offset[0.27999999999999997`], {
+                    Offset[0.5599999999999999]}, 
+                    Offset[0.27999999999999997`]}, "Rows" -> {
+                    Offset[0.2], {
+                    Offset[0.8]}, 
+                    Offset[0.2]}}], "DialogStyle",
+                StripOnInput->False],
+               DynamicModuleValues:>{}]}
+            },
+            DefaultBaseStyle->"Column",
+            GridBoxAlignment->{"Columns" -> {{Left}}},
+            GridBoxDividers->{"Columns" -> {{False}}, "Rows" -> {{False}}},
+            
+            GridBoxItemSize->{
+             "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+            GridBoxSpacings->{"Columns" -> {
+                Offset[0.27999999999999997`], {
+                 Offset[0.5599999999999999]}, 
+                Offset[0.27999999999999997`]}, "Rows" -> {
+                Offset[0.2], {
+                 Offset[3.6]}, 
+                Offset[0.2]}}],
+           FrameMargins->{{6, 6}, {6, 3}}], ""},
+         {
+          ItemBox[
+           TagBox[
+            ButtonBox[
+             PaneSelectorBox[{False->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "UpPointerOpener"]], True->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "UpPointerOpenerHot"]]}, Dynamic[
+              System`InformationDump`mouseOver$$]],
+             Alignment->Left,
+             Appearance->{"Default" -> None},
+             
+             ButtonFunction:>FEPrivate`Set[
+              System`InformationDump`open$$, False],
+             Evaluator->Automatic,
+             FrameMargins->{{9, 0}, {0, 0}},
+             ImageMargins->0,
+             ImageSize->Full,
+             Method->"Preemptive"],
+            
+            EventHandlerTag[{
+             "MouseEntered" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, True], 
+              "MouseExited" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, False], 
+              Method -> "Preemptive", PassEventsDown -> Automatic, 
+              PassEventsUp -> True}]],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], "\[SpanFromLeft]"}
+        },
+        AutoDelete->False,
+        FrameStyle->Directive[
+          GrayLevel[0.8], 
+          Thickness[Tiny]],
+        GridBoxAlignment->{"Columns" -> {Left, Right}, "Rows" -> {{Center}}},
+        GridBoxDividers->{
+         "Columns" -> {{None}}, "Rows" -> {False, {True}, False}},
+        GridBoxItemSize->{
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+       "Grid"], False->
+      TagBox[GridBox[{
+         {
+          ItemBox[
+           PaneBox[
+            StyleBox[
+             TagBox[
+              TooltipBox[
+               StyleBox["\<\" Symbol\"\>", "InformationRowLabel",
+                StripOnInput->False],
+               "\"Symbol\"",
+               TooltipStyle->"TextStyling"],
+              Annotation[#, "Symbol", "Tooltip"]& ], "InformationTitleText",
+             StripOnInput->False],
+            FrameMargins->{{4, 0}, {-1, 1}}],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           PaneBox[
+            
+            StyleBox["\<\"QEval[\\!\\(\\*\\n\\tTemplateBox[\\n\\t\\t{\\n\\t\\\
+t\\tStyleBox[\\\"g\\\", \\\"TI\\\"], \\n\\t\\t\\tStyleBox[\\\"f\\\", \\\"TI\\\
+\"]\\n\\t\\t},\\n\\t\\t\\\"BraKet\\\"\\n\\t]\\n\\)] evaluates the bra-ket \\!\
+\\(\\*\\n\\tTemplateBox[\\n\\t\\t{\\n\\t\\t\\tStyleBox[\\\"g\\\", \
+\\\"TI\\\"], \\n\\t\\t\\tStyleBox[\\\"f\\\", \
+\\\"TI\\\"]\\n\\t\\t},\\n\\t\\t\\\"BraKet\\\"\\n\\t]\\n\\).\\nQEval[\\!\\(\\*\
+\\n\\tStyleBox[\\\"f\\\", \
+\\\"TI\\\"]\\n\\)[\\!\\(\\*\\n\\tSubscriptBox[\\n\\t\\tStyleBox[\\\"expr\\\", \
+\\\"TI\\\"], \\n\\t\\t\\(1\\)\\n\\t]\\n\\), \
+\\!\\(\\*\\n\\tSubscriptBox[\\n\\t\\tStyleBox[\\\"expr\\\", \\\"TI\\\"], \
+\\n\\t\\t\\(2\\)\\n\\t]\\n\\), ...]] evaluates each inner expression \
+recursively, i.e. \\!\\(\\*\\n\\tStyleBox[\\\"f\\\", \\\"TI\\\"]\\n\\)[QEval[\
+\\!\\(\\*\\n\\tSubscriptBox[\\n\\t\\tStyleBox[\\\"expr\\\", \\\"TI\\\"], \
+\\n\\t\\t\\(1\\)\\n\\t]\\n\\)], \
+QEval[\\!\\(\\*\\n\\tSubscriptBox[\\n\\t\\tStyleBox[\\\"expr\\\", \
+\\\"TI\\\"], \\n\\t\\t\\(2\\)\\n\\t]\\n\\)], ...].\"\>", 
+             "InformationUsageText",
+             StripOnInput->False,
+             LineSpacing->{1.5, 1.5, 3.}],
+            FrameMargins->{{10, 10}, {8, 10}}],
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           TagBox[
+            ButtonBox[
+             PaneSelectorBox[{False->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "DownPointerOpener"],
+               ImageSizeCache->{10., {3., 7.}}], True->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "DownPointerOpenerHot"],
+               ImageSizeCache->{10., {3., 7.}}]}, Dynamic[
+              System`InformationDump`mouseOver$$]],
+             Alignment->Left,
+             Appearance->{"Default" -> None},
+             
+             ButtonFunction:>FEPrivate`Set[
+              System`InformationDump`open$$, True],
+             Evaluator->Automatic,
+             FrameMargins->{{9, 0}, {0, 0}},
+             ImageMargins->0,
+             ImageSize->Full,
+             Method->"Preemptive"],
+            
+            EventHandlerTag[{
+             "MouseEntered" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, True], 
+              "MouseExited" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, False], 
+              Method -> "Preemptive", PassEventsDown -> Automatic, 
+              PassEventsUp -> True}]],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], "\[SpanFromLeft]"}
+        },
+        AutoDelete->False,
+        FrameStyle->Directive[
+          GrayLevel[0.8], 
+          Thickness[Tiny]],
+        GridBoxAlignment->{"Columns" -> {Left, Right}, "Rows" -> {{Center}}},
+        GridBoxDividers->{
+         "Columns" -> {{None}}, "Rows" -> {False, {True}, False}},
+        GridBoxItemSize->{
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+       "Grid"]}, Dynamic[System`InformationDump`open$$],
+      BaselinePosition->Baseline,
+      FrameMargins->0,
+      ImageSize->Automatic],
+     DynamicModuleValues:>{}],
+    BaseStyle->"InformationGridFrame",
+    StripOnInput->False], "InformationGridPlain",
+   StripOnInput->False],
+  InformationData[<|
+   "ObjectType" -> "Symbol", "Usage" -> 
+    "QEval[\!\(\*\n\tTemplateBox[\n\t\t{\n\t\t\tStyleBox[\"g\", \"TI\"], \n\t\
+\t\tStyleBox[\"f\", \"TI\"]\n\t\t},\n\t\t\"BraKet\"\n\t]\n\)] evaluates the \
+bra-ket \!\(\*\n\tTemplateBox[\n\t\t{\n\t\t\tStyleBox[\"g\", \"TI\"], \n\t\t\t\
+StyleBox[\"f\", \"TI\"]\n\t\t},\n\t\t\"BraKet\"\n\t]\n\).\nQEval[\!\(\*\n\t\
+StyleBox[\"f\", \"TI\"]\n\)[\!\(\*\n\tSubscriptBox[\n\t\tStyleBox[\"expr\", \
+\"TI\"], \n\t\t\(1\)\n\t]\n\), \!\(\*\n\tSubscriptBox[\n\t\t\
+StyleBox[\"expr\", \"TI\"], \n\t\t\(2\)\n\t]\n\), ...]] evaluates each inner \
+expression recursively, i.e. \!\(\*\n\tStyleBox[\"f\", \"TI\"]\n\)[QEval[\!\(\
+\*\n\tSubscriptBox[\n\t\tStyleBox[\"expr\", \"TI\"], \n\t\t\(1\)\n\t]\n\)], \
+QEval[\!\(\*\n\tSubscriptBox[\n\t\tStyleBox[\"expr\", \"TI\"], \n\t\t\(2\)\n\t\
+]\n\)], ...].", "Documentation" -> None, "OwnValues" -> None, "UpValues" -> 
+    None, "DownValues" -> 
+    Information`InformationValueForm[
+     DownValues, CoolQuant`QEval, {CoolQuant`QEval[
+         PatternTest[
+          Pattern[CoolQuant`Q, 
+           Blank[]], CoolQuant`OperatorQ]] :> CoolQuant`QMult[CoolQuant`Q, 1],
+        CoolQuant`QEval[
+         BraKet[{
+           PatternTest[
+            Pattern[CoolQuant`\[Xi]1, 
+             Blank[]], 
+            CoolQuant`QBasis[CoolQuant`x]]}, {
+           PatternTest[
+            Pattern[CoolQuant`\[Xi]2, 
+             Blank[]], 
+            CoolQuant`QBasis[CoolQuant`x]]}]] :> 
+       DiracDelta[CoolQuant`\[Xi]1 - CoolQuant`\[Xi]2], CoolQuant`QEval[
+         BraKet[{
+           PatternTest[
+            Pattern[CoolQuant`\[Mu]1, 
+             Blank[]], 
+            CoolQuant`QBasis[CoolQuant`p]]}, {
+           PatternTest[
+            Pattern[CoolQuant`\[Mu]2, 
+             Blank[]], 
+            CoolQuant`QBasis[CoolQuant`p]]}]] :> 
+       DiracDelta[CoolQuant`\[Mu]1 - CoolQuant`\[Mu]2], CoolQuant`QEval[
+         BraKet[{
+           PatternTest[
+            Pattern[CoolQuant`\[Xi], 
+             Blank[]], 
+            CoolQuant`QBasis[CoolQuant`x]]}, {
+           PatternTest[
+            Pattern[CoolQuant`\[Mu], 
+             Blank[]], 
+            CoolQuant`QBasis[CoolQuant`p]]}]] :> 
+       E^((I/CoolQuant`\[HBar]) CoolQuant`\[Xi] CoolQuant`\[Mu])/Sqrt[
+        2 Pi CoolQuant`\[HBar]], CoolQuant`QEval[
+         BraKet[{
+           Pattern[CoolQuant`g, 
+            Blank[]]}, {
+           PatternTest[
+            Pattern[CoolQuant`e, 
+             Blank[]], 
+            CoolQuant`QBasis[CoolQuant`x, CoolQuant`p]]}]] :> Simplify[
+         Conjugate[
+          CoolQuant`QEval[
+           BraKet[{CoolQuant`e}, {CoolQuant`g}]]]], CoolQuant`QEval[
+         BraKet[{
+           PatternTest[
+            Pattern[CoolQuant`\[Xi], 
+             Blank[]], 
+            CoolQuant`QBasis[CoolQuant`x]]}, {
+           Pattern[CoolQuant`f, 
+            Blank[]]}]] :> CoolQuant`f[CoolQuant`\[Xi]], CoolQuant`QEval[
+         BraKet[{
+           PatternTest[
+            Pattern[CoolQuant`\[Mu], 
+             Blank[]], 
+            CoolQuant`QBasis[CoolQuant`p]]}, {
+           Pattern[CoolQuant`f, 
+            Blank[]]}]] :> OverTilde[CoolQuant`f][CoolQuant`\[Mu]], 
+       CoolQuant`QEval[
+         BraKet[{
+           Pattern[CoolQuant`g, 
+            Blank[]]}, {
+           Pattern[CoolQuant`f, 
+            Blank[]]}]] :> CoolQuant`QInner[CoolQuant`g, CoolQuant`f], 
+       CoolQuant`QEval[
+         Pattern[CoolQuant`f, 
+          Blank[]][
+          Pattern[CoolQuant`args, 
+           BlankSequence[]]]] :> Condition[
+         Apply[CoolQuant`f, 
+          Map[CoolQuant`QEval, {CoolQuant`args}]], 
+         Not[
+          CoolQuant`QHeadQ[
+           CoolQuant`f[CoolQuant`args]]]], CoolQuant`QEval[
+         Pattern[CoolQuant`\[Alpha], 
+          Blank[]]] :> CoolQuant`\[Alpha]}], "SubValues" -> None, 
+    "DefaultValues" -> None, "NValues" -> None, "FormatValues" -> None, 
+    "Options" -> None, "Attributes" -> {}, "FullName" -> "CoolQuant`QEval"|>, 
+   False]]], "Output",
+ CellChangeTimes->{
+  3.9400846088531857`*^9, 3.940085016828775*^9, 3.940085545137833*^9, 
+   3.940085700028*^9, 3.9400858517432423`*^9, 3.940086120233851*^9, {
+   3.940086246795463*^9, 3.940086283490151*^9}, 3.940086325475793*^9, 
+   3.94008654050746*^9, {3.9400866417569304`*^9, 3.940086665788211*^9}, 
+   3.940087133166939*^9, 3.9400871697952642`*^9, 3.940088294853724*^9, 
+   3.940088709235504*^9, {3.940088886682829*^9, 3.940088889358554*^9}, {
+   3.940089071573111*^9, 3.940089074132287*^9}, 3.940089207847806*^9, 
+   3.940089429733914*^9, {3.940089469651198*^9, 3.940089492629019*^9}, 
+   3.940090015467186*^9, 3.940090791055067*^9, 3.940091021132388*^9, 
+   3.940091153527329*^9},
+ CellLabel->"Out[269]=",
+ CellID->1872756934,ExpressionUUID->"27a969f1-f7c8-4ea0-ab5d-730404044bba"],
+
+Cell[BoxData[
+ InterpretationBox[
+  StyleBox[
+   FrameBox[
+    DynamicModuleBox[{System`InformationDump`open$$ = False, 
+     System`InformationDump`mouseOver$$ = False}, 
+     PaneSelectorBox[{True->
+      TagBox[GridBox[{
+         {
+          ItemBox[
+           PaneBox[
+            StyleBox[
+             TagBox[
+              TooltipBox[
+               StyleBox["\<\" Symbol\"\>", "InformationRowLabel",
+                StripOnInput->False],
+               "\"Symbol\"",
+               TooltipStyle->"TextStyling"],
+              Annotation[#, "Symbol", "Tooltip"]& ], "InformationTitleText",
+             StripOnInput->False,
+             BaseStyle -> None],
+            FrameMargins->{{4, 0}, {-1, 1}}],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           PaneBox[
+            
+            StyleBox["\<\"QInner[\\!\\(\\*\\n\\tStyleBox[\\\"g\\\", \
+\\\"TI\\\"]\\n\\), \\!\\(\\*\\n\\tStyleBox[\\\"f\\\", \\\"TI\\\"]\\n\\)] \
+computes the inner product \
+\\!\\(\\*\\n\\tTemplateBox[\\n\\t\\t{\\n\\t\\t\\tStyleBox[\\\"g\\\", \\\"TI\\\
+\"],\\n\\t\\t\\tStyleBox[\\\"f\\\", \\\"TI\\\"]\\n\\t\\t}, \
+\\n\\t\\t\\\"BraKet\\\"\\n\\t]\\n\\) in the position \
+basis.\\nQInner[\\!\\(\\*\\n\\tStyleBox[\\\"g\\\", \\\"TI\\\"]\\n\\), \
+\\!\\(\\*\\n\\tStyleBox[\\\"f\\\", \\\"TI\\\"]\\n\\), \
+\\!\\(\\*\\n\\tStyleBox[\\\"e\\\", \\\"TI\\\"]\\n\\)] computes the inner \
+product \\!\\(\\*\\n\\tTemplateBox[\\n\\t\\t{\\n\\t\\t\\tStyleBox[\\\"g\\\", \
+\\\"TI\\\"],\\n\\t\\t\\tStyleBox[\\\"f\\\", \\\"TI\\\"]\\n\\t\\t},\\n\\t\\t\\\
+\"BraKet\\\"\\n\\t]\\n\\) with respect to the basis element \
+\\!\\(\\*\\n\\tStyleBox[\\\"\\!\\(\\*SuperscriptBox[\\(e\\), \
+\\(\[Prime]\\)]\\)\\\", \\\"TI\\\"]\\n\\).\"\>", "InformationUsageText",
+             StripOnInput->False,
+             LineSpacing->{1.5, 1.5, 3.}],
+            FrameMargins->{{10, 10}, {8, 10}}],
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False]},
+         {
+          PaneBox[
+           TagBox[GridBox[{
+              {
+               StyleBox[
+                TagBox[
+                 TooltipBox[
+                  StyleBox["\<\" Definitions\"\>", "InformationRowLabel",
+                   StripOnInput->False],
+                  "\"Definitions\"",
+                  TooltipStyle->"TextStyling"],
+                 Annotation[#, "Definitions", "Tooltip"]& ], "DialogStyle",
+                StripOnInput->False]},
+              {
+               TemplateBox[{"\"\[ThinSpace]\"", 
+                 GridBox[{{
+                    RowBox[{
+                    RowBox[{"QInner", "[", 
+                    RowBox[{"g_", ",", "f_", ",", 
+                    RowBox[{"e_", ":", "x"}]}], "]"}], ":=", 
+                    RowBox[{
+                    SubsuperscriptBox["\[Integral]", 
+                    RowBox[{"-", "\[Infinity]"}], "\[Infinity]"], 
+                    RowBox[{
+                    RowBox[{"QEval", "[", 
+                    RowBox[{
+                    TemplateBox[{"g", 
+                    SuperscriptBox[
+                    "e", "\[Prime]", MultilineFunction -> None]}, "BraKet"], 
+                    " ", 
+                    TemplateBox[{
+                    SuperscriptBox[
+                    "e", "\[Prime]", MultilineFunction -> None], "f"}, 
+                    "BraKet"]}], "]"}], 
+                    RowBox[{"\[DifferentialD]", 
+                    SuperscriptBox[
+                    "e", "\[Prime]", MultilineFunction -> None]}]}]}]}]}, {
+                   " "}}, GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                  DefaultBaseStyle -> "Column", 
+                  GridBoxItemSize -> {
+                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}]},
+                "RowDefault"]}
+             },
+             DefaultBaseStyle->"Column",
+             GridBoxAlignment->{"Columns" -> {{Left}}},
+             
+             GridBoxItemSize->{
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+            "Column"],
+           FrameMargins->{{6, 0}, {3, 6}}], "\<\"\"\>"},
+         {
+          PaneBox[GridBox[{
+             {
+              
+              DynamicModuleBox[{System`InformationDump`open$$ = {
+               False, False, False, False, False, False}}, 
+               StyleBox[GridBox[{
+                  {
+                   TagBox[
+                    TooltipBox[
+                    StyleBox["\<\" Full Name\"\>", "InformationRowLabel",
+                    StripOnInput->False],
+                    "\"FullName\"",
+                    TooltipStyle->"TextStyling"],
+                    
+                    Annotation[#, "FullName", 
+                    "Tooltip"]& ], "\<\"CoolQuant`QInner\"\>"}
+                 },
+                 AutoDelete->False,
+                 GridBoxAlignment->{"Columns" -> {Right, Left}},
+                 GridBoxDividers->None,
+                 GridBoxItemSize->{"Columns" -> {Automatic, Automatic}},
+                 GridBoxSpacings->{"Columns" -> {
+                    Offset[0.27999999999999997`], {
+                    Offset[0.5599999999999999]}, 
+                    Offset[0.27999999999999997`]}, "Rows" -> {
+                    Offset[0.2], {
+                    Offset[0.8]}, 
+                    Offset[0.2]}}], "DialogStyle",
+                StripOnInput->False],
+               DynamicModuleValues:>{}]}
+            },
+            DefaultBaseStyle->"Column",
+            GridBoxAlignment->{"Columns" -> {{Left}}},
+            GridBoxDividers->{"Columns" -> {{False}}, "Rows" -> {{False}}},
+            
+            GridBoxItemSize->{
+             "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+            GridBoxSpacings->{"Columns" -> {
+                Offset[0.27999999999999997`], {
+                 Offset[0.5599999999999999]}, 
+                Offset[0.27999999999999997`]}, "Rows" -> {
+                Offset[0.2], {
+                 Offset[3.6]}, 
+                Offset[0.2]}}],
+           FrameMargins->{{6, 6}, {6, 3}}], ""},
+         {
+          ItemBox[
+           TagBox[
+            ButtonBox[
+             PaneSelectorBox[{False->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "UpPointerOpener"]], True->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "UpPointerOpenerHot"]]}, Dynamic[
+              System`InformationDump`mouseOver$$]],
+             Alignment->Left,
+             Appearance->{"Default" -> None},
+             
+             ButtonFunction:>FEPrivate`Set[
+              System`InformationDump`open$$, False],
+             Evaluator->Automatic,
+             FrameMargins->{{9, 0}, {0, 0}},
+             ImageMargins->0,
+             ImageSize->Full,
+             Method->"Preemptive"],
+            
+            EventHandlerTag[{
+             "MouseEntered" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, True], 
+              "MouseExited" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, False], 
+              Method -> "Preemptive", PassEventsDown -> Automatic, 
+              PassEventsUp -> True}]],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], "\[SpanFromLeft]"}
+        },
+        AutoDelete->False,
+        FrameStyle->Directive[
+          GrayLevel[0.8], 
+          Thickness[Tiny]],
+        GridBoxAlignment->{"Columns" -> {Left, Right}, "Rows" -> {{Center}}},
+        GridBoxDividers->{
+         "Columns" -> {{None}}, "Rows" -> {False, {True}, False}},
+        GridBoxItemSize->{
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+       "Grid"], False->
+      TagBox[GridBox[{
+         {
+          ItemBox[
+           PaneBox[
+            StyleBox[
+             TagBox[
+              TooltipBox[
+               StyleBox["\<\" Symbol\"\>", "InformationRowLabel",
+                StripOnInput->False],
+               "\"Symbol\"",
+               TooltipStyle->"TextStyling"],
+              Annotation[#, "Symbol", "Tooltip"]& ], "InformationTitleText",
+             StripOnInput->False],
+            FrameMargins->{{4, 0}, {-1, 1}}],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           PaneBox[
+            
+            StyleBox["\<\"QInner[\\!\\(\\*\\n\\tStyleBox[\\\"g\\\", \
+\\\"TI\\\"]\\n\\), \\!\\(\\*\\n\\tStyleBox[\\\"f\\\", \\\"TI\\\"]\\n\\)] \
+computes the inner product \
+\\!\\(\\*\\n\\tTemplateBox[\\n\\t\\t{\\n\\t\\t\\tStyleBox[\\\"g\\\", \\\"TI\\\
+\"],\\n\\t\\t\\tStyleBox[\\\"f\\\", \\\"TI\\\"]\\n\\t\\t}, \
+\\n\\t\\t\\\"BraKet\\\"\\n\\t]\\n\\) in the position \
+basis.\\nQInner[\\!\\(\\*\\n\\tStyleBox[\\\"g\\\", \\\"TI\\\"]\\n\\), \
+\\!\\(\\*\\n\\tStyleBox[\\\"f\\\", \\\"TI\\\"]\\n\\), \
+\\!\\(\\*\\n\\tStyleBox[\\\"e\\\", \\\"TI\\\"]\\n\\)] computes the inner \
+product \\!\\(\\*\\n\\tTemplateBox[\\n\\t\\t{\\n\\t\\t\\tStyleBox[\\\"g\\\", \
+\\\"TI\\\"],\\n\\t\\t\\tStyleBox[\\\"f\\\", \\\"TI\\\"]\\n\\t\\t},\\n\\t\\t\\\
+\"BraKet\\\"\\n\\t]\\n\\) with respect to the basis element \
+\\!\\(\\*\\n\\tStyleBox[\\\"\\!\\(\\*SuperscriptBox[\\(e\\), \
+\\(\[Prime]\\)]\\)\\\", \\\"TI\\\"]\\n\\).\"\>", "InformationUsageText",
+             StripOnInput->False,
+             LineSpacing->{1.5, 1.5, 3.}],
+            FrameMargins->{{10, 10}, {8, 10}}],
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           TagBox[
+            ButtonBox[
+             PaneSelectorBox[{False->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "DownPointerOpener"],
+               ImageSizeCache->{10., {3., 7.}}], True->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "DownPointerOpenerHot"],
+               ImageSizeCache->{10., {3., 7.}}]}, Dynamic[
+              System`InformationDump`mouseOver$$]],
+             Alignment->Left,
+             Appearance->{"Default" -> None},
+             
+             ButtonFunction:>FEPrivate`Set[
+              System`InformationDump`open$$, True],
+             Evaluator->Automatic,
+             FrameMargins->{{9, 0}, {0, 0}},
+             ImageMargins->0,
+             ImageSize->Full,
+             Method->"Preemptive"],
+            
+            EventHandlerTag[{
+             "MouseEntered" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, True], 
+              "MouseExited" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, False], 
+              Method -> "Preemptive", PassEventsDown -> Automatic, 
+              PassEventsUp -> True}]],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], "\[SpanFromLeft]"}
+        },
+        AutoDelete->False,
+        FrameStyle->Directive[
+          GrayLevel[0.8], 
+          Thickness[Tiny]],
+        GridBoxAlignment->{"Columns" -> {Left, Right}, "Rows" -> {{Center}}},
+        GridBoxDividers->{
+         "Columns" -> {{None}}, "Rows" -> {False, {True}, False}},
+        GridBoxItemSize->{
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+       "Grid"]}, Dynamic[System`InformationDump`open$$],
+      BaselinePosition->Baseline,
+      FrameMargins->0,
+      ImageSize->Automatic],
+     DynamicModuleValues:>{}],
+    BaseStyle->"InformationGridFrame",
+    StripOnInput->False], "InformationGridPlain",
+   StripOnInput->False],
+  InformationData[<|
+   "ObjectType" -> "Symbol", "Usage" -> 
+    "QInner[\!\(\*\n\tStyleBox[\"g\", \"TI\"]\n\), \!\(\*\n\tStyleBox[\"f\", \
+\"TI\"]\n\)] computes the inner product \!\(\*\n\tTemplateBox[\n\t\t{\n\t\t\t\
+StyleBox[\"g\", \"TI\"],\n\t\t\tStyleBox[\"f\", \"TI\"]\n\t\t}, \n\t\t\
+\"BraKet\"\n\t]\n\) in the position basis.\nQInner[\!\(\*\n\tStyleBox[\"g\", \
+\"TI\"]\n\), \!\(\*\n\tStyleBox[\"f\", \"TI\"]\n\), \!\(\*\n\tStyleBox[\"e\", \
+\"TI\"]\n\)] computes the inner product \!\(\*\n\tTemplateBox[\n\t\t{\n\t\t\t\
+StyleBox[\"g\", \"TI\"],\n\t\t\tStyleBox[\"f\", \"TI\"]\n\t\t},\n\t\t\"BraKet\
+\"\n\t]\n\) with respect to the basis element \!\(\*\n\t\
+StyleBox[\"\!\(\*SuperscriptBox[\(e\), \(\[Prime]\)]\)\", \"TI\"]\n\).", 
+    "Documentation" -> None, "OwnValues" -> None, "UpValues" -> None, 
+    "DownValues" -> 
+    Information`InformationValueForm[
+     DownValues, CoolQuant`QInner, {CoolQuant`QInner[
+         Pattern[CoolQuant`g, 
+          Blank[]], 
+         Pattern[CoolQuant`f, 
+          Blank[]], 
+         Optional[
+          Pattern[CoolQuant`e, 
+           Blank[]], CoolQuant`x]] :> Integrate[
+         CoolQuant`QEval[BraKet[{CoolQuant`g}, {
+             Derivative[1][CoolQuant`e]}] BraKet[{
+             Derivative[1][CoolQuant`e]}, {CoolQuant`f}]], {
+          Derivative[1][CoolQuant`e], -Infinity, Infinity}]}], "SubValues" -> 
+    None, "DefaultValues" -> None, "NValues" -> None, "FormatValues" -> None, 
+    "Options" -> None, "Attributes" -> {}, "FullName" -> "CoolQuant`QInner"|>,
+    False]]], "Output",
+ CellChangeTimes->{
+  3.9400846088531857`*^9, 3.940085016828775*^9, 3.940085545137833*^9, 
+   3.940085700028*^9, 3.9400858517432423`*^9, 3.940086120233851*^9, {
+   3.940086246795463*^9, 3.940086283490151*^9}, 3.940086325475793*^9, 
+   3.94008654050746*^9, {3.9400866417569304`*^9, 3.940086665788211*^9}, 
+   3.940087133166939*^9, 3.9400871697952642`*^9, 3.940088294853724*^9, 
+   3.940088709235504*^9, {3.940088886682829*^9, 3.940088889358554*^9}, {
+   3.940089071573111*^9, 3.940089074132287*^9}, 3.940089207847806*^9, 
+   3.940089429733914*^9, {3.940089469651198*^9, 3.940089492629019*^9}, 
+   3.940090015467186*^9, 3.940090791055067*^9, 3.940091021132388*^9, 
+   3.9400911536028748`*^9},
+ CellLabel->"Out[270]=",
+ CellID->1649385959,ExpressionUUID->"bcbdbc7d-3368-406e-a5e3-cb5911d88480"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "Sequence"}]], "Input",
+ CellChangeTimes->{{3.940090525387312*^9, 3.940090542906605*^9}},
+ CellLabel->"In[247]:=",
+ CellID->2097904239,ExpressionUUID->"57fa1f51-ce52-4a03-bdbf-ac30384775ca"],
+
+Cell[BoxData[
+ InterpretationBox[
+  StyleBox[
+   FrameBox[
+    DynamicModuleBox[{System`InformationDump`open$$ = False, 
+     System`InformationDump`mouseOver$$ = False}, 
+     PaneSelectorBox[{True->
+      TagBox[GridBox[{
+         {
+          ItemBox[
+           PaneBox[
+            StyleBox[
+             TagBox[
+              TooltipBox[
+               StyleBox["\<\" Symbol\"\>", "InformationRowLabel",
+                StripOnInput->False],
+               "\"Symbol\"",
+               TooltipStyle->"TextStyling"],
+              Annotation[#, "Symbol", "Tooltip"]& ], "InformationTitleText",
+             StripOnInput->False,
+             BaseStyle -> None],
+            FrameMargins->{{4, 0}, {-1, 1}}],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], 
+          ItemBox[
+           PaneBox[
+            TooltipBox[
+             ButtonBox[
+              PaneSelectorBox[{False->
+               
+               DynamicBox[FEPrivate`FrontEndResource[
+                "FEBitmaps", "InformationHelpIcon"]], True->
+               
+               DynamicBox[FEPrivate`FrontEndResource[
+                "FEBitmaps", "InformationHelpIconHot"]]}, Dynamic[
+                CurrentValue["MouseOver"]]],
+              Appearance->None,
+              BaseStyle->"Link",
+              ButtonData->"paclet:ref/Sequence",
+              ButtonNote->"paclet:ref/Sequence"],
+             "\"paclet:ref/Sequence\""],
+            FrameMargins->{{0, 4}, {0, 2}}],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           PaneBox[
+            
+            StyleBox["\<\"\\!\\(\\*RowBox[{\\\"Sequence\\\", \\\"[\\\", \
+RowBox[{SubscriptBox[StyleBox[\\\"expr\\\", \\\"TI\\\"], StyleBox[\\\"1\\\", \
+\\\"TR\\\"]], \\\",\\\", SubscriptBox[StyleBox[\\\"expr\\\", \\\"TI\\\"], \
+StyleBox[\\\"2\\\", \\\"TR\\\"]], \\\",\\\", StyleBox[\\\"\[Ellipsis]\\\", \\\
+\"TR\\\"]}], \\\"]\\\"}]\\) represents a sequence of arguments to be spliced \
+automatically into any function. \"\>", "InformationUsageText",
+             StripOnInput->False,
+             LineSpacing->{1.5, 1.5, 3.}],
+            FrameMargins->{{10, 10}, {8, 10}}],
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False]},
+         {
+          PaneBox[GridBox[{
+             {
+              
+              DynamicModuleBox[{System`InformationDump`open$$ = {
+               False, False, False, False, False, False}}, 
+               StyleBox[GridBox[{
+                  {
+                   TagBox[
+                    TooltipBox[
+                    StyleBox["\<\" Documentation\"\>", "InformationRowLabel",
+                    StripOnInput->False],
+                    "\"Documentation\"",
+                    TooltipStyle->"TextStyling"],
+                    Annotation[#, "Documentation", "Tooltip"]& ], 
+                   TemplateBox[{
+                    
+                    TemplateBox[{
+                    "\"Local \[RightGuillemet]\"", "paclet:ref/Sequence", 
+                    "paclet:ref/Sequence", "Link", {
+                    RGBColor[0.9686274509803922, 0.4666666666666667, 0.]}, 
+                    BaseStyle -> {
+                    RGBColor[0.0784313725490196, 0.1568627450980392, 0.6]}}, 
+                    "HyperlinkTemplate"], "\"  \"", 
+                    StyleBox[
+                    "\"|\"", "InformationRowLabel", StripOnInput -> False], 
+                    "\"  \"", 
+                    TemplateBox[{"\"Web \[RightGuillemet]\"", {
+                    URL[
+                    "http://reference.wolfram.com/language/ref/Sequence.html"]\
+, None}, "http://reference.wolfram.com/language/ref/Sequence.html", 
+                    "Hyperlink", {
+                    RGBColor[0.9686274509803922, 0.4666666666666667, 0.]}, 
+                    BaseStyle -> {
+                    RGBColor[0.0784313725490196, 0.1568627450980392, 0.6]}}, 
+                    "HyperlinkTemplate"]},
+                    "RowDefault"]},
+                  {
+                   TagBox[
+                    TooltipBox[
+                    StyleBox["\<\" Attributes\"\>", "InformationRowLabel",
+                    StripOnInput->False],
+                    "\"Attributes\"",
+                    TooltipStyle->"TextStyling"],
+                    Annotation[#, "Attributes", "Tooltip"]& ], 
+                   RowBox[{"{", "Protected", "}"}]},
+                  {
+                   TagBox[
+                    TooltipBox[
+                    StyleBox["\<\" Full Name\"\>", "InformationRowLabel",
+                    StripOnInput->False],
+                    "\"FullName\"",
+                    TooltipStyle->"TextStyling"],
+                    
+                    Annotation[#, "FullName", 
+                    "Tooltip"]& ], "\<\"System`Sequence\"\>"}
+                 },
+                 AutoDelete->False,
+                 GridBoxAlignment->{"Columns" -> {Right, Left}},
+                 GridBoxDividers->None,
+                 GridBoxItemSize->{"Columns" -> {Automatic, Automatic}},
+                 GridBoxSpacings->{"Columns" -> {
+                    Offset[0.27999999999999997`], {
+                    Offset[0.5599999999999999]}, 
+                    Offset[0.27999999999999997`]}, "Rows" -> {
+                    Offset[0.2], {
+                    Offset[0.8]}, 
+                    Offset[0.2]}}], "DialogStyle",
+                StripOnInput->False],
+               DynamicModuleValues:>{}]}
+            },
+            DefaultBaseStyle->"Column",
+            GridBoxAlignment->{"Columns" -> {{Left}}},
+            GridBoxDividers->{"Columns" -> {{False}}, "Rows" -> {{False}}},
+            
+            GridBoxItemSize->{
+             "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+            GridBoxSpacings->{"Columns" -> {
+                Offset[0.27999999999999997`], {
+                 Offset[0.5599999999999999]}, 
+                Offset[0.27999999999999997`]}, "Rows" -> {
+                Offset[0.2], {
+                 Offset[3.6]}, 
+                Offset[0.2]}}],
+           FrameMargins->{{6, 6}, {6, 3}}], ""},
+         {
+          ItemBox[
+           TagBox[
+            ButtonBox[
+             PaneSelectorBox[{False->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "UpPointerOpener"]], True->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "UpPointerOpenerHot"]]}, Dynamic[
+              System`InformationDump`mouseOver$$]],
+             Alignment->Left,
+             Appearance->{"Default" -> None},
+             
+             ButtonFunction:>FEPrivate`Set[
+              System`InformationDump`open$$, False],
+             Evaluator->Automatic,
+             FrameMargins->{{9, 0}, {0, 0}},
+             ImageMargins->0,
+             ImageSize->Full,
+             Method->"Preemptive"],
+            
+            EventHandlerTag[{
+             "MouseEntered" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, True], 
+              "MouseExited" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, False], 
+              Method -> "Preemptive", PassEventsDown -> Automatic, 
+              PassEventsUp -> True}]],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], "\[SpanFromLeft]"}
+        },
+        AutoDelete->False,
+        FrameStyle->Directive[
+          GrayLevel[0.8], 
+          Thickness[Tiny]],
+        GridBoxAlignment->{"Columns" -> {Left, Right}, "Rows" -> {{Center}}},
+        GridBoxDividers->{
+         "Columns" -> {{None}}, "Rows" -> {False, {True}, False}},
+        GridBoxItemSize->{
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+       "Grid"], False->
+      TagBox[GridBox[{
+         {
+          ItemBox[
+           PaneBox[
+            StyleBox[
+             TagBox[
+              TooltipBox[
+               StyleBox["\<\" Symbol\"\>", "InformationRowLabel",
+                StripOnInput->False],
+               "\"Symbol\"",
+               TooltipStyle->"TextStyling"],
+              Annotation[#, "Symbol", "Tooltip"]& ], "InformationTitleText",
+             StripOnInput->False],
+            FrameMargins->{{4, 0}, {-1, 1}}],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], 
+          ItemBox[
+           PaneBox[
+            TooltipBox[
+             ButtonBox[
+              PaneSelectorBox[{False->
+               
+               DynamicBox[FEPrivate`FrontEndResource[
+                "FEBitmaps", "InformationHelpIcon"],
+                ImageSizeCache->{13., {4., 9.}}], True->
+               
+               DynamicBox[FEPrivate`FrontEndResource[
+                "FEBitmaps", "InformationHelpIconHot"],
+                ImageSizeCache->{13., {4., 9.}}]}, Dynamic[
+                CurrentValue["MouseOver"]]],
+              Appearance->None,
+              BaseStyle->"Link",
+              ButtonData->"paclet:ref/Sequence",
+              ButtonNote->"paclet:ref/Sequence"],
+             "\"paclet:ref/Sequence\""],
+            FrameMargins->{{0, 4}, {0, 2}}],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           PaneBox[
+            
+            StyleBox["\<\"\\!\\(\\*RowBox[{\\\"Sequence\\\", \\\"[\\\", \
+RowBox[{SubscriptBox[StyleBox[\\\"expr\\\", \\\"TI\\\"], StyleBox[\\\"1\\\", \
+\\\"TR\\\"]], \\\",\\\", SubscriptBox[StyleBox[\\\"expr\\\", \\\"TI\\\"], \
+StyleBox[\\\"2\\\", \\\"TR\\\"]], \\\",\\\", StyleBox[\\\"\[Ellipsis]\\\", \\\
+\"TR\\\"]}], \\\"]\\\"}]\\) represents a sequence of arguments to be spliced \
+automatically into any function. \"\>", "InformationUsageText",
+             StripOnInput->False,
+             LineSpacing->{1.5, 1.5, 3.}],
+            FrameMargins->{{10, 10}, {8, 10}}],
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           TagBox[
+            ButtonBox[
+             PaneSelectorBox[{False->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "DownPointerOpener"],
+               ImageSizeCache->{10., {3., 7.}}], True->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "DownPointerOpenerHot"],
+               ImageSizeCache->{10., {3., 7.}}]}, Dynamic[
+              System`InformationDump`mouseOver$$]],
+             Alignment->Left,
+             Appearance->{"Default" -> None},
+             
+             ButtonFunction:>FEPrivate`Set[
+              System`InformationDump`open$$, True],
+             Evaluator->Automatic,
+             FrameMargins->{{9, 0}, {0, 0}},
+             ImageMargins->0,
+             ImageSize->Full,
+             Method->"Preemptive"],
+            
+            EventHandlerTag[{
+             "MouseEntered" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, True], 
+              "MouseExited" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, False], 
+              Method -> "Preemptive", PassEventsDown -> Automatic, 
+              PassEventsUp -> True}]],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], "\[SpanFromLeft]"}
+        },
+        AutoDelete->False,
+        FrameStyle->Directive[
+          GrayLevel[0.8], 
+          Thickness[Tiny]],
+        GridBoxAlignment->{"Columns" -> {Left, Right}, "Rows" -> {{Center}}},
+        GridBoxDividers->{
+         "Columns" -> {{None}}, "Rows" -> {False, {True}, False}},
+        GridBoxItemSize->{
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+       "Grid"]}, Dynamic[System`InformationDump`open$$],
+      BaselinePosition->Baseline,
+      FrameMargins->0,
+      ImageSize->Automatic],
+     DynamicModuleValues:>{}],
+    BaseStyle->"InformationGridFrame",
+    StripOnInput->False], "InformationGridPlain",
+   StripOnInput->False],
+  InformationData[<|
+   "ObjectType" -> "Symbol", "Usage" -> 
+    "\!\(\*RowBox[{\"Sequence\", \"[\", \
+RowBox[{SubscriptBox[StyleBox[\"expr\", \"TI\"], StyleBox[\"1\", \"TR\"]], \
+\",\", SubscriptBox[StyleBox[\"expr\", \"TI\"], StyleBox[\"2\", \"TR\"]], \",\
+\", StyleBox[\"\[Ellipsis]\", \"TR\"]}], \"]\"}]\) represents a sequence of \
+arguments to be spliced automatically into any function. ", 
+    "Documentation" -> <|
+     "Local" -> "paclet:ref/Sequence", "Web" -> 
+      "http://reference.wolfram.com/language/ref/Sequence.html"|>, 
+    "OwnValues" -> None, "UpValues" -> None, "DownValues" -> None, 
+    "SubValues" -> None, "DefaultValues" -> None, "NValues" -> None, 
+    "FormatValues" -> None, "Options" -> None, "Attributes" -> {Protected}, 
+    "FullName" -> "System`Sequence"|>, False]]], "Output",
+ CellChangeTimes->{{3.9400905327952003`*^9, 3.940090543254376*^9}},
+ CellLabel->"Out[247]=",
+ CellID->404488661,ExpressionUUID->"6426a49f-dd7d-4365-8f4f-c0195328a5ca"]
+}, Open  ]]
+},
+WindowSize->{606, 681.75},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+TaggingRules-><|"$testsRun" -> False|>,
+FrontEndVersion->"14.0 for Linux x86 (64-bit) (December 12, 2023)",
+StyleDefinitions->FrontEnd`FileName[{"MUnit"}, "MUnit.nb", CharacterEncoding -> 
+  "UTF-8"],
+ExpressionUUID->"0516523c-7676-4b34-aa29-cd5f21e48c66"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 325, 7, 29, "Input",ExpressionUUID->"4bbe3360-d5c0-4db7-9cb4-28b6539e323c",
+ CellID->1470065049],
+Cell[CellGroupData[{
+Cell[908, 31, 468, 9, 110, "Input",ExpressionUUID->"158bc394-539b-4942-b334-a1a6241d7a02",
+ CellID->773134936],
+Cell[1379, 42, 11330, 274, 97, "Output",ExpressionUUID->"1635dc16-4acf-4607-97d2-3d3c68161bc8",
+ CellID->266038101],
+Cell[12712, 318, 13683, 310, 175, "Output",ExpressionUUID->"54079517-0f22-4c86-8943-594de12da3c0",
+ CellID->2042922420],
+Cell[26398, 630, 13786, 322, 123, "Output",ExpressionUUID->"a3c78010-4021-4866-a709-61732000c8af",
+ CellID->1025208523],
+Cell[40187, 954, 20464, 477, 152, "Output",ExpressionUUID->"27a969f1-f7c8-4ea0-ab5d-730404044bba",
+ CellID->1872756934],
+Cell[60654, 1433, 14296, 330, 154, "Output",ExpressionUUID->"bcbdbc7d-3368-406e-a5e3-cb5911d88480",
+ CellID->1649385959]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[74987, 1768, 218, 4, 29, "Input",ExpressionUUID->"57fa1f51-ce52-4a03-bdbf-ac30384775ca",
+ CellID->2097904239],
+Cell[75208, 1774, 13199, 314, 133, "Output",ExpressionUUID->"6426a49f-dd7d-4365-8f4f-c0195328a5ca",
+ CellID->404488661]
+}, Open  ]]
+}
+]
+*)
+
